@@ -86,18 +86,33 @@ export default async function SneakerPage({
     <main className="max-w-6xl mx-auto p-8">
       <div className="grid md:grid-cols-2 gap-12">
 
-        <div>
-          {sneaker.sneakerDetails?.heroImage?.node?.sourceUrl && (
+<div>
+
+{sneaker.sneakerDetails?.videoUrl && (
+  <iframe
+    src={`https://www.youtube.com/embed/${
+      sneaker.sneakerDetails.videoUrl
+        .split("youtu.be/")[1]
+        ?.split("?")[0]
+    }`}
+    className="w-full aspect-video rounded-xl shadow-2xl"
+    allowFullScreen
+  />
+)}
+
+{sneaker.sneakerDetails?.spinImages?.nodes?.length > 0 ? (
+  <SneakerSpinner
+    images={sneaker.sneakerDetails.spinImages.nodes}
+  />
+) : sneaker.sneakerDetails?.heroImage?.node?.sourceUrl ? (
   <img
     src={sneaker.sneakerDetails.heroImage.node.sourceUrl}
     alt={sneaker.title}
     className="w-full rounded-xl shadow-2xl"
   />
-)}
-        </div>
-<SneakerSpinner
-  images={sneaker.sneakerDetails.spinImages.nodes}
-/>
+) : null}
+
+</div>
         <div>
           <h1 className="text-4xl font-bold mb-4">
             {sneaker.title}
