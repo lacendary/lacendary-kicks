@@ -1,43 +1,9 @@
+import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
 import { notFound } from "next/navigation";
 import SneakerSpinner from "@/components/SneakerSpinner";
 
 async function getSneaker(slug: string) {
-  const query = `
-    query GetSneaker($slug: ID!) {
-      sneaker(id: $slug, idType: SLUG) {
-        title
-        slug
 
-        sneakerDetails {
-  sku
-  colorway
-  retailPrice
-  overview
-  designer
-  videoUrl
-  lacendaryNotes
-
-  heroImage {
-    node {
-      sourceUrl
-    }
-  }
-
-  spinImages(first: 200) {
-    nodes {
-      sourceUrl
-    }
-  }
-}
-
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-      }
-    }
-  `;
 console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
 console.log("Slug being sent:", slug);
 
@@ -49,9 +15,9 @@ console.log("Slug being sent:", slug);
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query,
-        variables: { slug },
-      }),
+  query: GET_SNEAKER,
+  variables: { slug },
+}),
       next: { revalidate: 60 },
     }
   );
