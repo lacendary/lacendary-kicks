@@ -1,112 +1,94 @@
-type SneakerTimelineProps = {
-  sneaker: any;
-};
+import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
+import { notFound } from "next/navigation";
 
-export default function SneakerTimeline({
-  sneaker,
-}: SneakerTimelineProps) {
-  const events = sneaker.sneakerDetails.timelineEvents || [];
+import SneakerHero from "@/components/SneakerHero";
+import SneakerMiniNav from "@/components/SneakerMiniNav";
+import SneakerGallery from "@/components/SneakerGallery";
+import SneakerSpinner from "@/components/SneakerSpinner";
+import SneakerDetails from "@/components/SneakerDetails";
+import SneakerSoundtrack from "@/components/SneakerSoundtrack";
+import SneakerTimeline from "@/components/SneakerTimeline";
 
-  if (events.length === 0) {
-    return null;
+async function getSneaker(slug: string) {
+  console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
+  console.log("Slug being sent:", slug);
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: GET_SNEAKER,
+        variables: { slug },
+      }),
+      next: { revalidate: 60 },
+    }
+  );
+
+  const json = await res.json();
+
+  return json?.data?.sneaker;
+}
+
+export default async function SneakerPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const sneaker = await getSneaker(slug);
+
+  if (!sneaker) {
+    notFound();
   }
 
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-6">
-      <h2 className="mb-8 text-lg font-bold uppercase tracking-wide text-white">
-        Timeline
-      </h2>
-
-      <div className="relative pt-10 pb-4">
-        {/* Timeline Line */}
-        <div className="absolute left-4 right-4 top-[58px] h-[2px] bg-zinc-300" />
-
-        {/* Timeline Events */}
-        <div className="relative flex justify-between">
-          {events.map((event: any, index: number) => (
-            <div
-              key={index}
-              className="group relative flex flex-col items-center text-center"
-            >
-              {/* Hover Card */}
-              <div
-                className="
-                  invisible
-                  absolute
-                  bottom-28
-                  left-1/2
-                  z-20
-                  w-80
-                  -translate-x-1/2
-                  rounded-xl
-                  border
-                  border-zinc-800
-                  bg-black
-                  p-5
-                  opacity-0
-                  shadow-2xl
-                  transition-all
-                  duration-300
-                  ease-out
-                  group-hover:visible
-                  group-hover:-translate-y-2
-                  group-hover:opacity-100
-                "
-              >
-                <h3 className="text-base font-bold uppercase tracking-wide text-white">
-                  {event.eventTitle}
-                </h3>
-
-                <p className="mt-3 text-sm leading-6 text-zinc-400">
-                  {event.eventDescription}
-                </p>
-
-                <div className="mt-4 border-t border-zinc-800 pt-3 text-xs uppercase tracking-widest text-red-500">
-                  View Full Timeline →
-                </div>
-
-                {/* Arrow */}
-                <div className="absolute bottom-[-10px] left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-r border-b border-zinc-800 bg-black" />
-              </div>
-
-              {/* Timeline Marker */}
-              <div
-                className="
-                  z-10
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-white
-                  transition-all
-                  duration-300
-                  group-hover:scale-110
-                "
-              >
-                {/* Black Gap */}
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-950">
-                  {/* Red Circle */}
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-600">
-                    {/* Center Dot */}
-                    <div className="h-2 w-2 rounded-full bg-red-900" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Date */}
-              <p className="mt-4 text-sm font-semibold text-red-500">
-                {new Date(event.eventDate).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </p>
-            </div>
-          ))}
+    <>
+      {/* Hero Band */}
+      <section className="w-full bg-[#0d0d0d] border-b border-zinc-800">
+        <div className="mx-auto max-w-7xl px-6 py-12">
+          <SneakerHero sneaker={sneaker} />
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Main Content */}
+      <main className="mx-auto max-w-7xl px-6 py-10">
+        <SneakerMiniNav sneaker={sneaker} />
+
+        <div className="mt-8">
+          <SneakerGallery sneaker={sneaker} />
+        </div>
+
+        <section id="spinner" className="mt-10">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {/* Spinner */}
+            <div className="lg:col-span-2">
+              <h2 className="mb-4 text-lg font-bold uppercase tracking-wide text-white">
+                360° Spinner
+              </h2>
+
+              <SneakerSpinner
+                images={sneaker.sneakerDetails.spinImages.nodes}
+              />
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6 lg:col-span-1">
+              <SneakerDetails sneaker={sneaker} />
+
+              <SneakerSoundtrack sneaker={sneaker} />
+            </div>
+          </div>
+        </section>
+
+        <section id="timeline" className="mt-12">
+          <SneakerTimeline sneaker={sneaker} />
+        </section>
+      </main>
+    </>
   );
 }
