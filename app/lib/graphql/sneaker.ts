@@ -63,6 +63,23 @@ query GetSneaker($slug: ID!) {
         }
       }
 
+      # Original Soundtrack
+      songTitle
+      artist
+      streamingUrl
+
+      albumArtwork {
+        node {
+          sourceUrl
+        }
+      }
+
+      audioFile {
+        node {
+          mediaItemUrl
+        }
+      }
+
       # Future
       originalReleaseDate
       originalReleaseYear

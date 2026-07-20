@@ -6,6 +6,7 @@ import SneakerMiniNav from "@/components/SneakerMiniNav";
 import SneakerGallery from "@/components/SneakerGallery";
 import SneakerSpinner from "@/components/SneakerSpinner";
 import SneakerDetails from "@/components/SneakerDetails";
+import SneakerSoundtrack from "@/components/SneakerSoundtrack";
 
 async function getSneaker(slug: string) {
   console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
@@ -66,8 +67,10 @@ export default async function SneakerPage({
           </div>
 
           {/* Right Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <SneakerDetails sneaker={sneaker} />
+
+            <SneakerSoundtrack sneaker={sneaker} />
           </div>
         </div>
       </section>
