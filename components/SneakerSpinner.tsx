@@ -7,6 +7,11 @@ export default function SneakerSpinner({
 }: {
   images: { sourceUrl: string }[];
 }) {
+  // Don't render if there are no spinner images
+  if (!images || images.length === 0) {
+    return null;
+  }
+
   const [frame, setFrame] = useState(0);
 
   return (
@@ -22,9 +27,7 @@ export default function SneakerSpinner({
         min="0"
         max={images.length - 1}
         value={frame}
-        onChange={(e) =>
-          setFrame(Number(e.target.value))
-        }
+        onChange={(e) => setFrame(Number(e.target.value))}
         className="w-full mt-4"
       />
     </div>

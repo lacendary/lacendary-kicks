@@ -8,14 +8,28 @@ query GetSneaker($slug: ID!) {
 
     sneakerDetails {
 
-      # Identity
-      sku
-      colorway
-      retailPrice
-      designer
-
-      # Content
+      # Hero
+      brand {
+        nodes {
+          name
+          slug
+        }
+      }
+      model
+      nickname
+      retroReleaseYear
       overview
+      videoUrl
+
+      # Details Panel
+      retroReleaseDate
+      sku
+      retailPrice
+      colorway
+      designer
+      category
+
+      # Editorial
       lacendaryNotes
 
       # Media
@@ -31,8 +45,27 @@ query GetSneaker($slug: ID!) {
         }
       }
 
-      # Video
-      videoUrl
+      lacendaryImages {
+        nodes {
+          sourceUrl
+        }
+      }
+
+      officialImages {
+        nodes {
+          sourceUrl
+        }
+      }
+
+      onFootImages {
+        nodes {
+          sourceUrl
+        }
+      }
+
+      # Future
+      originalReleaseDate
+      originalReleaseYear
     }
 
     featuredImage {

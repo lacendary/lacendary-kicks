@@ -1,11 +1,15 @@
 import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
 import { notFound } from "next/navigation";
+
+import SneakerHero from "@/components/SneakerHero";
+import SneakerMiniNav from "@/components/SneakerMiniNav";
+import SneakerGallery from "@/components/SneakerGallery";
 import SneakerSpinner from "@/components/SneakerSpinner";
+import SneakerDetails from "@/components/SneakerDetails";
 
 async function getSneaker(slug: string) {
-
-console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
-console.log("Slug being sent:", slug);
+  console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
+  console.log("Slug being sent:", slug);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
@@ -15,24 +19,16 @@ console.log("Slug being sent:", slug);
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-  query: GET_SNEAKER,
-  variables: { slug },
-}),
+        query: GET_SNEAKER,
+        variables: { slug },
+      }),
       next: { revalidate: 60 },
     }
   );
 
   const json = await res.json();
 
-console.log(JSON.stringify(json, null, 2));
-
-console.log("GRAPHQL RESPONSE:");
-console.log(JSON.stringify(json, null, 2));
-
-return json?.data?.sneaker;console.log("GRAPHQL:");
-console.log(JSON.stringify(json, null, 2));
-
-return json?.data?.sneaker;
+  return json?.data?.sneaker;
 }
 
 export default async function SneakerPage({
@@ -49,71 +45,31 @@ export default async function SneakerPage({
   }
 
   return (
-    <main className="max-w-6xl mx-auto p-8">
-      <div className="grid md:grid-cols-2 gap-12">
+    <main className="max-w-7xl mx-auto px-6 py-12">
+      <SneakerHero sneaker={sneaker} />
 
-<div>
+      <SneakerMiniNav sneaker={sneaker} />
 
-{sneaker.sneakerDetails?.videoUrl && (
-  <iframe
-    src={`https://www.youtube.com/embed/${
-      sneaker.sneakerDetails.videoUrl
-        .split("youtu.be/")[1]
-        ?.split("?")[0]
-    }`}
-    className="w-full aspect-video rounded-xl shadow-2xl"
-    allowFullScreen
-  />
-)}
+      <SneakerGallery sneaker={sneaker} />
 
-{sneaker.sneakerDetails?.spinImages?.nodes?.length > 0 ? (
-  <SneakerSpinner
-    images={sneaker.sneakerDetails.spinImages.nodes}
-  />
-) : sneaker.sneakerDetails?.heroImage?.node?.sourceUrl ? (
-  <img
-    src={sneaker.sneakerDetails.heroImage.node.sourceUrl}
-    alt={sneaker.title}
-    className="w-full rounded-xl shadow-2xl"
-  />
-) : null}
+      <section id="spinner" className="mt-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Spinner */}
+          <div className="lg:col-span-2">
+            <h2 className="mb-4 text-lg font-bold uppercase tracking-wide text-white">
+              360° Spinner
+            </h2>
 
-</div>
-        <div>
-          <h1 className="text-4xl font-bold mb-4">
-            {sneaker.title}
-          </h1>
+            <SneakerSpinner
+              images={sneaker.sneakerDetails.spinImages.nodes}
+            />
+          </div>
 
-          <div className="space-y-2">
-            <p>
-              <strong>SKU:</strong>{" "}
-              {sneaker.sneakerDetails?.sku}
-            </p>
-
-            <p>
-              <strong>Colorway:</strong>{" "}
-              {sneaker.sneakerDetails?.colorway}
-            </p>
-
-            <p>
-              <strong>Retail:</strong> $
-              {sneaker.sneakerDetails?.retailPrice}
-            </p>
+          {/* Right Sidebar */}
+          <div className="lg:col-span-1">
+            <SneakerDetails sneaker={sneaker} />
           </div>
         </div>
-      </div>
-
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold mb-4">
-          Overview
-        </h2>
-
-        <div
-          dangerouslySetInnerHTML={{
-            __html:
-              sneaker.sneakerDetails?.overview || "",
-          }}
-        />
       </section>
     </main>
   );
