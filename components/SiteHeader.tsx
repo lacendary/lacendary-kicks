@@ -13,21 +13,22 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-20 max-w-7xl items-center gap-12 px-6">
 
         {/* Logo */}
-        <Link href="/" className="shrink-0">
+        <Link href="/" className="flex items-center mr-8">
           <Image
-            src="/logo.png"
+            src="/LacendaryLogo.png"
             alt="Lacendary Kicks"
-            width={180}
-            height={60}
+            width={240}
+            height={70}
             priority
+            className="h-16 w-auto"
           />
         </Link>
 
         {/* Navigation */}
-        <nav className="hidden lg:block">
+        <nav className="hidden lg:block ml-auto">
           <ul className="flex items-center gap-10">
             {navItems.map((item) => (
               <li key={item.href}>
