@@ -15,6 +15,7 @@ query GetSneaker($slug: ID!) {
           slug
         }
       }
+
       model
       nickname
       retroReleaseYear
@@ -78,6 +79,13 @@ query GetSneaker($slug: ID!) {
         node {
           mediaItemUrl
         }
+      }
+
+      # Timeline
+      timelineEvents {
+        eventDate
+        eventTitle
+        eventDescription
       }
 
       # Future

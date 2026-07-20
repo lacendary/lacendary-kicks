@@ -20,7 +20,7 @@ export default function SneakerGallery({
 
   return (
     <section className="mt-8">
-      <div className="border border-zinc-800 rounded-lg bg-zinc-950 p-4">
+      <div className="lk-card p-4">
 
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold uppercase tracking-wide text-white">

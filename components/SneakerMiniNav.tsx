@@ -38,17 +38,17 @@ export default function SneakerMiniNav({
   ];
 
   return (
-    <nav className="mt-12 border-b border-zinc-800">
+    <nav className="mt-8">
       <ul className="flex items-center gap-10 overflow-x-auto">
         {navItems
           .filter((item) => item.show)
           .map((item, index) => (
             <li key={item.id}>
               <button
-                className={`pb-4 whitespace-nowrap text-sm font-semibold uppercase tracking-wider transition-colors ${
+                className={`whitespace-nowrap border-b-2 pb-3 text-sm font-semibold uppercase tracking-wider transition-colors ${
                   index === 0
-                    ? "border-b-2 border-red-600 text-white"
-                    : "text-zinc-400 hover:text-white"
+                    ? "border-red-600 text-white"
+                    : "border-transparent text-zinc-500 hover:text-white"
                 }`}
               >
                 {item.label}

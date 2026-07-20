@@ -7,6 +7,7 @@ import SneakerGallery from "@/components/SneakerGallery";
 import SneakerSpinner from "@/components/SneakerSpinner";
 import SneakerDetails from "@/components/SneakerDetails";
 import SneakerSoundtrack from "@/components/SneakerSoundtrack";
+import SneakerTimeline from "@/components/SneakerTimeline";
 
 async function getSneaker(slug: string) {
   console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
@@ -46,34 +47,48 @@ export default async function SneakerPage({
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-12">
-      <SneakerHero sneaker={sneaker} />
-
-      <SneakerMiniNav sneaker={sneaker} />
-
-      <SneakerGallery sneaker={sneaker} />
-
-      <section id="spinner" className="mt-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Spinner */}
-          <div className="lg:col-span-2">
-            <h2 className="mb-4 text-lg font-bold uppercase tracking-wide text-white">
-              360° Spinner
-            </h2>
-
-            <SneakerSpinner
-              images={sneaker.sneakerDetails.spinImages.nodes}
-            />
-          </div>
-
-          {/* Right Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            <SneakerDetails sneaker={sneaker} />
-
-            <SneakerSoundtrack sneaker={sneaker} />
-          </div>
+    <>
+      {/* Hero Band */}
+      <section className="w-full bg-[#0d0d0d] border-b border-zinc-800">
+        <div className="mx-auto max-w-7xl px-6 py-12">
+          <SneakerHero sneaker={sneaker} />
         </div>
       </section>
-    </main>
+
+      {/* Main Content */}
+      <main className="mx-auto max-w-7xl px-6 py-10">
+        <SneakerMiniNav sneaker={sneaker} />
+
+        <div className="mt-8">
+          <SneakerGallery sneaker={sneaker} />
+        </div>
+
+        <section id="spinner" className="mt-10">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {/* Spinner */}
+            <div className="lg:col-span-2">
+              <h2 className="mb-4 text-lg font-bold uppercase tracking-wide text-white">
+                360° Spinner
+              </h2>
+
+              <SneakerSpinner
+                images={sneaker.sneakerDetails.spinImages.nodes}
+              />
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6 lg:col-span-1">
+              <SneakerDetails sneaker={sneaker} />
+
+              <SneakerSoundtrack sneaker={sneaker} />
+            </div>
+          </div>
+        </section>
+
+        <section id="timeline" className="mt-12">
+          <SneakerTimeline sneaker={sneaker} />
+        </section>
+      </main>
+    </>
   );
 }
