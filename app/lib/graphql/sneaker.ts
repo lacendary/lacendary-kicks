@@ -33,6 +33,8 @@ cardImage {
       retroReleaseDate
       sku
       retailPrice
+      stockxUrl
+      goatUrl
       colorway
       designer
       category

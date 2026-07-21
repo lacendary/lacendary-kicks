@@ -5,7 +5,7 @@ export default function SiteHeader() {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Sneaker Archive", href: "/archive" },
-    { label: "Lacendary Picks", href: "/picks" },
+    { label: "Lacendary Picks", href: "/lacendary-picks" },
     { label: "Tale of the Tape", href: "/compare" },
     { label: "Articles", href: "/articles" },
     { label: "About Us", href: "/about" },

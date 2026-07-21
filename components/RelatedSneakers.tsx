@@ -24,12 +24,14 @@ export default async function RelatedSneakers({
   if (!relatedSneakers.length) return null;
 
   return (
-    <section className="mt-16 rounded-xl border border-zinc-800 bg-[#111111] p-8">
-      <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-white">
+    <section className="h-full rounded-xl border border-zinc-800 bg-[#111111] p-6 flex flex-col">
+      <h2 className="mb-5 text-lg font-bold uppercase tracking-wide text-white">
         Related Sneakers
       </h2>
 
-      <SneakerGrid sneakers={relatedSneakers} />
+      <div className="flex-1">
+        <SneakerGrid sneakers={relatedSneakers} />
+      </div>
     </section>
   );
 }
