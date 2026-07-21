@@ -8,6 +8,7 @@ import SneakerSpinner from "@/components/SneakerSpinner";
 import SneakerDetails from "@/components/SneakerDetails";
 import SneakerSoundtrack from "@/components/SneakerSoundtrack";
 import SneakerTimeline from "@/components/SneakerTimeline";
+import RelatedSneakers from "@/components/RelatedSneakers";
 
 async function getSneaker(slug: string) {
   console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
@@ -88,6 +89,9 @@ export default async function SneakerPage({
         <section id="timeline" className="mt-12">
           <SneakerTimeline sneaker={sneaker} />
         </section>
+        <section id="related" className="mt-12">
+  <RelatedSneakers sneaker={sneaker} />
+</section>
       </main>
     </>
   );

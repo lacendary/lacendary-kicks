@@ -21,6 +21,13 @@ query GetSneaker($slug: ID!) {
       retroReleaseYear
       overview
       videoUrl
+      editorialStatus
+
+cardImage {
+  node {
+    sourceUrl
+  }
+}
 
       # Details Panel
       retroReleaseDate
