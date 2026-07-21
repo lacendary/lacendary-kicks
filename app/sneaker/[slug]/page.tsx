@@ -10,6 +10,7 @@ import SneakerSoundtrack from "@/components/SneakerSoundtrack";
 import SneakerTimeline from "@/components/SneakerTimeline";
 import RelatedSneakers from "@/components/RelatedSneakers";
 import SneakerMarketData from "@/components/SneakerMarketData";
+import SpinnerViewer from "@/components/SpinnerViewer";
 
 async function getSneaker(slug: string) {
   console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
@@ -83,7 +84,7 @@ export default async function SneakerPage({
                   </span>
                 </div>
 
-                <SneakerSpinner
+                <SpinnerViewer
   images={sneaker.sneakerDetails.spinImages?.nodes ?? []}
 />
               </section>
