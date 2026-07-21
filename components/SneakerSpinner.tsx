@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type Props = {
   images: {
@@ -15,44 +15,88 @@ export default function SneakerSpinner({
   frame,
   onFrameChange,
 }: Props) {
-  if (!images || images.length === 0) {
-    return null;
-  }
+  const spinnerImages = images ?? [];
 
-  // Internal state for standalone use
   const [internalFrame, setInternalFrame] = useState(0);
 
-  // Use external state if provided, otherwise internal state
   const currentFrame = frame ?? internalFrame;
   const setCurrentFrame = onFrameChange ?? setInternalFrame;
 
-  // Prevent invalid frame indexes
-  const safeFrame = Math.min(currentFrame, images.length - 1);
-useEffect(() => {
-  images.forEach((image) => {
-    const img = new window.Image();
-    img.src = image.sourceUrl;
-  });
-}, [images]);
+  const dragStartX = useRef(0);
+  const dragStartFrame = useRef(0);
+  const dragging = useRef(false);
+
+  // Preload all images
+  useEffect(() => {
+    spinnerImages.forEach((image) => {
+      const img = new Image();
+      img.src = image.sourceUrl;
+    });
+  }, [spinnerImages]);
+
+  if (spinnerImages.length === 0) {
+    return null;
+  }
+
+  const safeFrame = Math.min(currentFrame, spinnerImages.length - 1);
+
+  const pixelsPerFrame = 12;
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    dragging.current = true;
+    dragStartX.current = e.clientX;
+    dragStartFrame.current = safeFrame;
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging.current) return;
+
+    const delta = e.clientX - dragStartX.current;
+
+    let nextFrame =
+      dragStartFrame.current + Math.round(delta / pixelsPerFrame);
+
+    // Wrap around infinitely
+    nextFrame =
+      ((nextFrame % spinnerImages.length) + spinnerImages.length) %
+      spinnerImages.length;
+
+    setCurrentFrame(nextFrame);
+  };
+
+  const handlePointerUp = () => {
+    dragging.current = false;
+  };
+
+  const handlePointerLeave = () => {
+    dragging.current = false;
+  };
+
   return (
     <div className="space-y-5">
-      {/* Spinner */}
-      <div className="overflow-hidden rounded-xl border border-zinc-700 bg-black shadow-lg">
+      <div
+        className="overflow-hidden rounded-xl border border-zinc-700 bg-black shadow-lg cursor-grab active:cursor-grabbing touch-none"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerLeave}
+      >
         <img
-          src={images[safeFrame].sourceUrl}
+          src={spinnerImages[safeFrame].sourceUrl}
           alt="360° Sneaker View"
           draggable={false}
           loading="eager"
-          className="block h-auto w-full select-none"
+          className="block w-full h-auto select-none pointer-events-none"
         />
       </div>
 
-      {/* Slider */}
       <div className="px-2">
         <input
           type="range"
           min={0}
-          max={images.length - 1}
+          max={spinnerImages.length - 1}
           value={safeFrame}
           onChange={(e) => setCurrentFrame(Number(e.target.value))}
           className="w-full cursor-pointer accent-white"
