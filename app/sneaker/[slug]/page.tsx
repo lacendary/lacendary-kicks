@@ -27,9 +27,13 @@ async function getSneaker(slug: string) {
         query: GET_SNEAKER,
         variables: { slug },
       }),
-      next: { revalidate: 60 },
+      cache: "no-store", // Disable Next.js caching
     }
   );
+
+  if (!res.ok) {
+    throw new Error(`GraphQL request failed: ${res.status}`);
+  }
 
   const json = await res.json();
 
