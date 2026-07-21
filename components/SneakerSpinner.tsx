@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   images: {
@@ -28,7 +28,12 @@ export default function SneakerSpinner({
 
   // Prevent invalid frame indexes
   const safeFrame = Math.min(currentFrame, images.length - 1);
-
+useEffect(() => {
+  images.forEach((image) => {
+    const img = new window.Image();
+    img.src = image.sourceUrl;
+  });
+}, [images]);
   return (
     <div className="space-y-5">
       {/* Spinner */}
