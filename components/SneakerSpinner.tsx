@@ -1,13 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 type Props = {
   images: {
     sourceUrl: string;
   }[];
-  frame: number;
-  onFrameChange: (frame: number) => void;
+  frame?: number;
+  onFrameChange?: (frame: number) => void;
 };
 
 export default function SneakerSpinner({
@@ -19,8 +20,15 @@ export default function SneakerSpinner({
     return null;
   }
 
+  // Internal state for standalone use
+  const [internalFrame, setInternalFrame] = useState(0);
+
+  // Use external state if provided, otherwise internal state
+  const currentFrame = frame ?? internalFrame;
+  const setCurrentFrame = onFrameChange ?? setInternalFrame;
+
   // Prevent invalid frame indexes
-  const safeFrame = Math.min(frame, images.length - 1);
+  const safeFrame = Math.min(currentFrame, images.length - 1);
 
   return (
     <div className="space-y-5">
@@ -31,7 +39,7 @@ export default function SneakerSpinner({
           alt="360° Sneaker View"
           width={1200}
           height={675}
-          priority
+          unoptimized
           draggable={false}
           className="block h-auto w-full select-none"
         />
@@ -44,7 +52,7 @@ export default function SneakerSpinner({
           min={0}
           max={images.length - 1}
           value={safeFrame}
-          onChange={(e) => onFrameChange(Number(e.target.value))}
+          onChange={(e) => setCurrentFrame(Number(e.target.value))}
           className="w-full cursor-pointer accent-white"
         />
       </div>
