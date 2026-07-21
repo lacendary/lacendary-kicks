@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 type Props = {
   images: {
@@ -34,13 +33,11 @@ export default function SneakerSpinner({
     <div className="space-y-5">
       {/* Spinner */}
       <div className="overflow-hidden rounded-xl border border-zinc-700 bg-black shadow-lg">
-        <Image
+        <img
           src={images[safeFrame].sourceUrl}
           alt="360° Sneaker View"
-          width={1200}
-          height={675}
-          unoptimized
           draggable={false}
+          loading="eager"
           className="block h-auto w-full select-none"
         />
       </div>
