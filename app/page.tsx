@@ -8,6 +8,8 @@ import SneakerSpinner from "@/components/SneakerSpinner";
 import SneakerDetails from "@/components/SneakerDetails";
 import SneakerSoundtrack from "@/components/SneakerSoundtrack";
 import SneakerTimeline from "@/components/SneakerTimeline";
+import RelatedSneakers from "@/components/RelatedSneakers";
+import SneakerMarketData from "@/components/SneakerMarketData";
 
 async function getSneaker(slug: string) {
   console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
@@ -49,7 +51,7 @@ export default async function SneakerPage({
   return (
     <>
       {/* Hero Band */}
-      <section className="w-full bg-[#0d0d0d] border-b border-zinc-800">
+      <section className="w-full border-b border-zinc-800 bg-[#0d0d0d]">
         <div className="mx-auto max-w-7xl px-6 py-12">
           <SneakerHero sneaker={sneaker} />
         </div>
@@ -63,30 +65,57 @@ export default async function SneakerPage({
           <SneakerGallery sneaker={sneaker} />
         </div>
 
+        {/* Spinner + Sidebar */}
         <section id="spinner" className="mt-10">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Spinner */}
             <div className="lg:col-span-2">
-              <h2 className="mb-4 text-lg font-bold uppercase tracking-wide text-white">
-                360° Spinner
-              </h2>
+              <section className="rounded-xl border border-zinc-800 bg-[#111111] p-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <h2 className="text-lg font-bold uppercase tracking-wide text-white">
+                    360° Spinner
+                  </h2>
 
-              <SneakerSpinner
-                images={sneaker.sneakerDetails.spinImages.nodes}
-              />
+                  <span className="text-zinc-500">|</span>
+
+                  <span className="text-lg font-bold uppercase tracking-wide text-zinc-400">
+                    Drag to Spin
+                  </span>
+                </div>
+
+                <SneakerSpinner
+  images={sneaker.sneakerDetails.spinImages?.nodes ?? []}
+/>
+              </section>
             </div>
 
             {/* Sidebar */}
             <div className="space-y-6 lg:col-span-1">
               <SneakerDetails sneaker={sneaker} />
-
               <SneakerSoundtrack sneaker={sneaker} />
             </div>
           </div>
         </section>
 
+        {/* Timeline */}
         <section id="timeline" className="mt-12">
           <SneakerTimeline sneaker={sneaker} />
+        </section>
+
+        {/* Related Sneakers + Market Data */}
+        <section className="mt-12">
+          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-4">
+            <div className="lg:col-span-3">
+              <RelatedSneakers sneaker={sneaker} />
+            </div>
+
+            <div className="lg:col-span-1">
+              <SneakerMarketData
+                stockxUrl={sneaker.sneakerDetails.stockxUrl}
+                goatUrl={sneaker.sneakerDetails.goatUrl}
+              />
+            </div>
+          </div>
         </section>
       </main>
     </>
