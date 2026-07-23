@@ -1,21 +1,11 @@
 import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
+import { GET_RELATED_SNEAKERS } from "@/app/lib/graphql/relatedSneakers";
+import { request } from "graphql-request";
 import { notFound } from "next/navigation";
 
-import SneakerHero from "@/components/SneakerHero";
-import SneakerMiniNav from "@/components/SneakerMiniNav";
-import SneakerGallery from "@/components/SneakerGallery";
-import SneakerSpinner from "@/components/SneakerSpinner";
-import SneakerDetails from "@/components/SneakerDetails";
-import SneakerSoundtrack from "@/components/SneakerSoundtrack";
-import SneakerTimeline from "@/components/SneakerTimeline";
-import RelatedSneakers from "@/components/RelatedSneakers";
-import SneakerMarketData from "@/components/SneakerMarketData";
-import SpinnerViewer from "@/components/SpinnerViewer";
+import SneakerExperience from "@/components/SneakerExperience";
 
 async function getSneaker(slug: string) {
-  console.log("WP URL:", process.env.NEXT_PUBLIC_WORDPRESS_URL);
-  console.log("Slug being sent:", slug);
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
     {
@@ -27,7 +17,7 @@ async function getSneaker(slug: string) {
         query: GET_SNEAKER,
         variables: { slug },
       }),
-      cache: "no-store", // Disable Next.js caching
+      cache: "no-store",
     }
   );
 
@@ -40,6 +30,14 @@ async function getSneaker(slug: string) {
   return json?.data?.sneaker;
 }
 
+async function getRelatedSneakers() {
+  const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`;
+
+  const data = await request(endpoint, GET_RELATED_SNEAKERS);
+
+  return data.sneakers.nodes;
+}
+
 export default async function SneakerPage({
   params,
 }: {
@@ -47,82 +45,19 @@ export default async function SneakerPage({
 }) {
   const { slug } = await params;
 
-  const sneaker = await getSneaker(slug);
+  const [sneaker, relatedSneakers] = await Promise.all([
+    getSneaker(slug),
+    getRelatedSneakers(),
+  ]);
 
   if (!sneaker) {
     notFound();
   }
 
   return (
-    <>
-      {/* Hero Band */}
-      <section className="w-full border-b border-zinc-800 bg-[#0d0d0d]">
-        <div className="mx-auto max-w-7xl px-6 py-12">
-          <SneakerHero sneaker={sneaker} />
-        </div>
-      </section>
-
-      {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-6 py-10">
-        <SneakerMiniNav sneaker={sneaker} />
-
-        <div className="mt-8">
-          <SneakerGallery sneaker={sneaker} />
-        </div>
-
-        {/* Spinner + Sidebar */}
-        <section id="spinner" className="mt-10">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {/* Spinner */}
-            <div className="lg:col-span-2">
-              <section className="rounded-xl border border-zinc-800 bg-[#111111] p-6">
-                <div className="mb-4 flex items-center gap-3">
-                  <h2 className="text-lg font-bold uppercase tracking-wide text-white">
-                    360° Spinner
-                  </h2>
-
-                  <span className="text-zinc-500">|</span>
-
-                  <span className="text-lg font-bold uppercase tracking-wide text-zinc-400">
-                    Drag to Spin
-                  </span>
-                </div>
-
-                <SpinnerViewer
-  images={sneaker.sneakerDetails.spinImages?.nodes ?? []}
-/>
-              </section>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-6 lg:col-span-1">
-              <SneakerDetails sneaker={sneaker} />
-              <SneakerSoundtrack sneaker={sneaker} />
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline */}
-        <section id="timeline" className="mt-12">
-          <SneakerTimeline sneaker={sneaker} />
-        </section>
-
-        {/* Related Sneakers + Market Data */}
-        <section className="mt-12">
-          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-4">
-            <div className="lg:col-span-3">
-              <RelatedSneakers sneaker={sneaker} />
-            </div>
-
-            <div className="lg:col-span-1">
-              <SneakerMarketData
-                stockxUrl={sneaker.sneakerDetails.stockxUrl}
-                goatUrl={sneaker.sneakerDetails.goatUrl}
-              />
-            </div>
-          </div>
-        </section>
-      </main>
-    </>
+    <SneakerExperience
+      sneaker={sneaker}
+      relatedSneakers={relatedSneakers}
+    />
   );
 }

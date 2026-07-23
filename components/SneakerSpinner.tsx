@@ -42,13 +42,17 @@ export default function SneakerSpinner({
 
   const pixelsPerFrame = 12;
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const handlePointerDown = (
+  e: React.PointerEvent<HTMLDivElement>
+) => {
+  e.preventDefault();
 
-    dragging.current = true;
-    dragStartX.current = e.clientX;
-    dragStartFrame.current = safeFrame;
-  };
+  e.currentTarget.setPointerCapture(e.pointerId);
+
+  dragging.current = true;
+  dragStartX.current = e.clientX;
+  dragStartFrame.current = safeFrame;
+};
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
@@ -66,9 +70,12 @@ export default function SneakerSpinner({
     setCurrentFrame(nextFrame);
   };
 
-  const handlePointerUp = () => {
-    dragging.current = false;
-  };
+  const handlePointerUp = (
+  e: React.PointerEvent<HTMLDivElement>
+) => {
+  e.currentTarget.releasePointerCapture(e.pointerId);
+  dragging.current = false;
+};
 
   const handlePointerLeave = () => {
     dragging.current = false;
@@ -83,13 +90,13 @@ export default function SneakerSpinner({
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerLeave}
       >
-        <img
-          src={spinnerImages[safeFrame].sourceUrl}
-          alt="360° Sneaker View"
-          draggable={false}
-          loading="eager"
-          className="block w-full h-auto select-none pointer-events-none"
-        />
+       <img
+  src={spinnerImages[safeFrame].sourceUrl}
+  alt="360° Sneaker View"
+  draggable={false}
+  loading="eager"
+  className="block w-full h-auto select-none pointer-events-none"
+/>
       </div>
 
       <div className="px-2">

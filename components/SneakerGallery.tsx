@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import ImageLightbox from "@/components/ImageLightbox";
 
 type SneakerGalleryProps = {
   sneaker: any;
@@ -18,6 +22,30 @@ export default function SneakerGallery({
     return null;
   }
 
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+const [currentIndex, setCurrentIndex] = useState(0);
+
+const openLightbox = (index: number) => {
+  setCurrentIndex(index);
+  setIsLightboxOpen(true);
+};
+
+const closeLightbox = () => {
+  setIsLightboxOpen(false);
+};
+
+const previousImage = () => {
+  setCurrentIndex((prev) =>
+    prev === 0 ? images.length - 1 : prev - 1
+  );
+};
+
+const nextImage = () => {
+  setCurrentIndex((prev) =>
+    prev === images.length - 1 ? 0 : prev + 1
+  );
+};
+
   return (
     <section className="mt-8">
       <div className="lk-card p-4">
@@ -35,9 +63,10 @@ export default function SneakerGallery({
         <div className="flex gap-3 overflow-x-auto pb-2">
           {images.map((image: any, index: number) => (
             <div
-              key={index}
-              className="relative h-24 w-40 flex-shrink-0 overflow-hidden rounded border border-zinc-800"
-            >
+  key={index}
+  onClick={() => openLightbox(index)}
+  className="relative h-24 w-40 flex-shrink-0 cursor-pointer overflow-hidden rounded border border-zinc-800"
+>
               <Image
                 src={image.sourceUrl}
                 alt={`Gallery Image ${index + 1}`}
@@ -49,6 +78,14 @@ export default function SneakerGallery({
         </div>
 
       </div>
+    <ImageLightbox
+  images={images}
+  currentIndex={currentIndex}
+  isOpen={isLightboxOpen}
+  onClose={closeLightbox}
+  onPrevious={previousImage}
+  onNext={nextImage}
+/>  
     </section>
   );
 }
