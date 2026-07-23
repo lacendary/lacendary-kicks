@@ -19,13 +19,7 @@ async function getArchive() {
     throw new Error(`GraphQL request failed: ${res.status}`);
   }
 
-  const text = await res.text();
-
-console.log("Raw GraphQL response:", text);
-
-const json = JSON.parse(text);
-
-  console.log("Archive response:", JSON.stringify(json, null, 2));
+  const json = await res.json();
 
   if (json.errors) {
     throw new Error(JSON.stringify(json.errors));
@@ -37,10 +31,11 @@ const json = JSON.parse(text);
 export default async function ArchivePage() {
   const data: any = await getArchive();
 
-  const archiveSneakers = data.sneakers.nodes.filter(
-    (shoe: any) =>
-      shoe.sneakerDetails?.editorialStatus?.[0] === "Archived"
-  );
+  const archiveSneakers =
+    data?.sneakers?.nodes?.filter(
+      (shoe: any) =>
+        shoe.sneakerDetails?.editorialStatus?.[0] === "Archived"
+    ) ?? [];
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
