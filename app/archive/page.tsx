@@ -1,14 +1,37 @@
-import { request } from "graphql-request";
-
 import SneakerGrid from "@/components/SneakerGrid";
 import { GET_ARCHIVE } from "@/app/lib/graphql/archive";
 
 async function getArchive() {
   const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`;
 
-  const data = await request(endpoint, GET_ARCHIVE);
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_ARCHIVE,
+    }),
+    cache: "no-store",
+  });
 
-  return data;
+  if (!res.ok) {
+    throw new Error(`GraphQL request failed: ${res.status}`);
+  }
+
+  const text = await res.text();
+
+console.log("Raw GraphQL response:", text);
+
+const json = JSON.parse(text);
+
+  console.log("Archive response:", JSON.stringify(json, null, 2));
+
+  if (json.errors) {
+    throw new Error(JSON.stringify(json.errors));
+  }
+
+  return json.data;
 }
 
 export default async function ArchivePage() {
