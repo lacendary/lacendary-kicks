@@ -20,19 +20,9 @@ export default function SneakerExperience({
   allSneakers,
 }: SneakerExperienceProps) {
   const [activeTab, setActiveTab] = useState("overview");
-console.log("sneaker:", sneaker);
 
-console.log("sneakerDetails:", sneaker.sneakerDetails);
+  console.log(sneaker.sneakerDetails);
 
-console.log(
-  "heroImage from sneakerDetails:",
-  sneaker.sneakerDetails?.heroImage
-);
-
-console.log(
-  "lacendaryImages from sneakerDetails:",
-  sneaker.sneakerDetails?.lacendaryImages
-);
   return (
     <>
       {/* Hero */}
@@ -59,9 +49,17 @@ console.log(
           )}
 
 {activeTab === "photography" && (
-  <div className="text-white p-8">
-    Photography panel test
-  </div>
+  <PhotographyPanel
+    photography={{
+      heroImage: sneaker.sneakerDetails?.heroImage?.node,
+      lacendaryImages:
+        sneaker.sneakerDetails?.lacendaryImages?.nodes ?? [],
+      officialImages:
+        sneaker.sneakerDetails?.officialImages?.nodes ?? [],
+      onFootImages:
+        sneaker.sneakerDetails?.onFootImages?.nodes ?? [],
+    }}
+  />
 )}
 
           {activeTab === "timeline" && (

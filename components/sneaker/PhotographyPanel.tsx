@@ -30,6 +30,8 @@ function ThumbnailRow({
 }: ThumbnailRowProps) {
   if (!images || images.length === 0) return null;
 
+
+
   return (
     <section className="space-y-4">
       <h3 className="text-xl font-semibold">{title}</h3>
@@ -46,11 +48,12 @@ function ThumbnailRow({
             }`}
           >
             <Image
-              src={image.sourceUrl}
-              alt={`${title} ${index + 1}`}
-              fill
-              className="object-cover"
-            />
+  src={image.sourceUrl}
+  alt={`${title} ${index + 1}`}
+  fill
+  sizes="96px"
+  className="object-cover"
+/>
           </button>
         ))}
       </div>
@@ -62,6 +65,8 @@ export default function PhotographyPanel({
   photography,
 }: PhotographyPanelProps) {
 
+
+
    const {
   heroImage,
   lacendaryImages = [],
@@ -72,11 +77,33 @@ const [featuredImage, setFeaturedImage] = useState<ImageItem | undefined>(
   heroImage
 );
 
+useEffect(() => {
+  setFeaturedImage(
+    heroImage ??
+      lacendaryImages[0] ??
+      officialImages[0] ??
+      onFootImages[0]
+  );
+}, [
+  heroImage,
+  lacendaryImages,
+  officialImages,
+  onFootImages,
+]);
+
 const [lightboxOpen, setLightboxOpen] = useState(false);
 
 const [currentGallery, setCurrentGallery] = useState<ImageItem[]>(
-  lacendaryImages ?? []
+  lacendaryImages.length
+    ? lacendaryImages
+    : officialImages.length
+      ? officialImages
+      : onFootImages
 );
+
+useEffect(() => {
+  setCurrentGallery(lacendaryImages ?? []);
+}, [lacendaryImages]);
 
 
 const [currentGalleryName, setCurrentGalleryName] = useState(
@@ -103,7 +130,7 @@ const changeFeaturedImage = (
 };
 
 const currentIndex = currentGallery.findIndex(
-  (img) => img.sourceUrl === featuredImage?.sourceUrl
+  (img) => img?.sourceUrl === featuredImage?.sourceUrl
 );
 
 const hasPrevious = currentIndex > 0;
@@ -180,13 +207,14 @@ useEffect(() => {
                 ease: "easeInOut",
               }}
             >
-              <Image
-                src={featuredImage.sourceUrl}
-                alt="Featured Photograph"
-                fill
-                className="object-cover"
-                priority
-              />
+           <Image
+  src={featuredImage.sourceUrl}
+  alt="Featured Photograph"
+  fill
+  sizes="(max-width: 768px) 100vw, 1200px"
+  className="object-cover"
+  priority
+/>
             </motion.button>
           )}
         </AnimatePresence>
@@ -246,12 +274,13 @@ useEffect(() => {
             </div>
 
             <Image
-              src={featuredImage.sourceUrl}
-              alt="Featured Photograph"
-              fill
-              className="object-contain"
-              priority
-            />
+  src={featuredImage.sourceUrl}
+  alt="Featured Photograph"
+  fill
+  sizes="100vw"
+  className="object-contain"
+  priority
+/>
 
             <button
               onClick={() => setLightboxOpen(false)}
