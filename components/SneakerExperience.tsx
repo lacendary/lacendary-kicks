@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import OverviewPanel from "@/components/sneaker/OverviewPanel";
+import PhotographyPanel from "@/components/sneaker/PhotographyPanel";
 import SneakerHero from "@/components/SneakerHero";
 import SneakerMiniNav from "@/components/SneakerMiniNav";
 import CompareClient from "@/components/CompareClient";
+
 
 type SneakerExperienceProps = {
   sneaker: any;
@@ -18,7 +20,19 @@ export default function SneakerExperience({
   allSneakers,
 }: SneakerExperienceProps) {
   const [activeTab, setActiveTab] = useState("overview");
+console.log("sneaker:", sneaker);
 
+console.log("sneakerDetails:", sneaker.sneakerDetails);
+
+console.log(
+  "heroImage from sneakerDetails:",
+  sneaker.sneakerDetails?.heroImage
+);
+
+console.log(
+  "lacendaryImages from sneakerDetails:",
+  sneaker.sneakerDetails?.lacendaryImages
+);
   return (
     <>
       {/* Hero */}
@@ -45,8 +59,18 @@ export default function SneakerExperience({
           )}
 
           {activeTab === "photography" && (
-            <div className="text-white">Photography Panel</div>
-          )}
+ <PhotographyPanel
+  photography={{
+    heroImage: sneaker.sneakerDetails?.heroImage?.node,
+    lacendaryImages:
+      sneaker.sneakerDetails?.lacendaryImages?.nodes ?? [],
+    officialImages:
+      sneaker.sneakerDetails?.officialImages?.nodes ?? [],
+    onFootImages:
+      sneaker.sneakerDetails?.onFootImages?.nodes ?? [],
+  }}
+/>
+)}
 
           {activeTab === "timeline" && (
             <div className="text-white">Timeline Panel</div>
