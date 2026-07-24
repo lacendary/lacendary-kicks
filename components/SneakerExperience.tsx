@@ -58,18 +58,10 @@ console.log(
             />
           )}
 
-          {activeTab === "photography" && (
- <PhotographyPanel
-  photography={{
-    heroImage: sneaker.sneakerDetails?.heroImage?.node,
-    lacendaryImages:
-      sneaker.sneakerDetails?.lacendaryImages?.nodes ?? [],
-    officialImages:
-      sneaker.sneakerDetails?.officialImages?.nodes ?? [],
-    onFootImages:
-      sneaker.sneakerDetails?.onFootImages?.nodes ?? [],
-  }}
-/>
+{activeTab === "photography" && (
+  <div className="text-white p-8">
+    Photography panel test
+  </div>
 )}
 
           {activeTab === "timeline" && (

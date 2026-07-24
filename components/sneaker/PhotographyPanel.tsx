@@ -28,7 +28,7 @@ function ThumbnailRow({
   featuredImage,
   onSelect,
 }: ThumbnailRowProps) {
-  if (images.length === 0) return null;
+  if (!images || images.length === 0) return null;
 
   return (
     <section className="space-y-4">
@@ -62,12 +62,12 @@ export default function PhotographyPanel({
   photography,
 }: PhotographyPanelProps) {
 
-    const {
-    heroImage,
-    lacendaryImages,
-    officialImages,
-    onFootImages,
-  } = photography;
+   const {
+  heroImage,
+  lacendaryImages = [],
+  officialImages = [],
+  onFootImages = [],
+} = photography;
 const [featuredImage, setFeaturedImage] = useState<ImageItem | undefined>(
   heroImage
 );
@@ -75,26 +75,9 @@ const [featuredImage, setFeaturedImage] = useState<ImageItem | undefined>(
 const [lightboxOpen, setLightboxOpen] = useState(false);
 
 const [currentGallery, setCurrentGallery] = useState<ImageItem[]>(
-  heroImage && lacendaryImages.some(
-    img => img.sourceUrl === heroImage.sourceUrl
-  )
-    ? lacendaryImages
-    : heroImage
-      ? [heroImage]
-      : []
+  lacendaryImages ?? []
 );
-useEffect(() => {
-  if (!featuredImage) return;
 
-  if (
-    lacendaryImages.some(
-      img => img.sourceUrl === featuredImage.sourceUrl
-    )
-  ) {
-    setCurrentGallery(lacendaryImages);
-    setCurrentGalleryName("Lacendary Photography");
-  }
-}, [featuredImage, lacendaryImages]);
 
 const [currentGalleryName, setCurrentGalleryName] = useState(
   "Lacendary Photography"
