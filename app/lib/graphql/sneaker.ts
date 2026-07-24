@@ -23,11 +23,11 @@ query GetSneaker($slug: ID!) {
       videoUrl
       editorialStatus
 
-cardImage {
-  node {
-    sourceUrl
-  }
-}
+      cardImage {
+        node {
+          sourceUrl
+        }
+      }
 
       # Details Panel
       retroReleaseDate
@@ -90,22 +90,29 @@ cardImage {
         }
       }
 
-      # Timeline
-      timelineEvents {
-        eventDate
-        eventTitle
-        eventDescription
-      }
+# Timeline
+timelineEvents {
+  eventDate
+  timelineLabel
+  eventTitle
+  eventDescription
+  badge
+  source
+  sourceUrl
 
-      # Future
-      originalReleaseDate
-      originalReleaseYear
+  image {
+    node {
+      sourceUrl
+      altText
     }
+  }
+}
 
-    featuredImage {
-      node {
-        sourceUrl
-      }
+# Future
+originalReleaseDate
+originalReleaseYear
+
+
     }
   }
 }

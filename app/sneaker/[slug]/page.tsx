@@ -29,6 +29,16 @@ async function getSneaker(slug: string) {
 
   const json = await res.json();
 
+  console.log("========== GRAPHQL RESPONSE ==========");
+  console.log(JSON.stringify(json, null, 2));
+  console.log("======================================");
+
+  if (json.errors) {
+    return {
+      __graphqlErrors: json.errors,
+    };
+  }
+
   return json?.data?.sneaker;
 }
 
@@ -61,8 +71,18 @@ export default async function SneakerPage({
     getAllSneakers(),
   ]);
 
-  if (!sneaker) {
-    notFound();
+  if (!sneaker || (sneaker as any).__graphqlErrors) {
+    return (
+      <pre
+        style={{
+          whiteSpace: "pre-wrap",
+          padding: "2rem",
+          color: "white",
+        }}
+      >
+        {JSON.stringify(sneaker, null, 2)}
+      </pre>
+    );
   }
 
   return (

@@ -3,10 +3,12 @@
 import { useState } from "react";
 import OverviewPanel from "@/components/sneaker/OverviewPanel";
 import PhotographyPanel from "@/components/sneaker/PhotographyPanel";
+import TimelinePanel, {
+  type TimelineEventData,
+} from "@/components/sneaker/TimelinePanel";
 import SneakerHero from "@/components/SneakerHero";
 import SneakerMiniNav from "@/components/SneakerMiniNav";
 import CompareClient from "@/components/CompareClient";
-
 
 type SneakerExperienceProps = {
   sneaker: any;
@@ -21,7 +23,25 @@ export default function SneakerExperience({
 }: SneakerExperienceProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
-  console.log(sneaker.sneakerDetails);
+  const timelineEvents: TimelineEventData[] =
+    sneaker.sneakerDetails?.timelineEvents?.map(
+      (event: any, index: number) => ({
+        id: index + 1,
+        date: event.eventDate
+          ? new Date(event.eventDate).toLocaleDateString("en-US", {
+              month: "long",
+              year: "numeric",
+            })
+          : "",
+        timelineLabel: event.timelineLabel ?? "",
+        title: event.eventTitle ?? "",
+        description: event.eventDescription ?? "",
+        badge: event.badge ?? "",
+        source: event.source ?? "",
+        sourceUrl: event.sourceUrl ?? "",
+        image: event.image?.node?.sourceUrl ?? "",
+      })
+    ) ?? [];
 
   return (
     <>
@@ -48,22 +68,22 @@ export default function SneakerExperience({
             />
           )}
 
-{activeTab === "photography" && (
-  <PhotographyPanel
-    photography={{
-      heroImage: sneaker.sneakerDetails?.heroImage?.node,
-      lacendaryImages:
-        sneaker.sneakerDetails?.lacendaryImages?.nodes ?? [],
-      officialImages:
-        sneaker.sneakerDetails?.officialImages?.nodes ?? [],
-      onFootImages:
-        sneaker.sneakerDetails?.onFootImages?.nodes ?? [],
-    }}
-  />
-)}
+          {activeTab === "photography" && (
+            <PhotographyPanel
+              photography={{
+                heroImage: sneaker.sneakerDetails?.heroImage?.node,
+                lacendaryImages:
+                  sneaker.sneakerDetails?.lacendaryImages?.nodes ?? [],
+                officialImages:
+                  sneaker.sneakerDetails?.officialImages?.nodes ?? [],
+                onFootImages:
+                  sneaker.sneakerDetails?.onFootImages?.nodes ?? [],
+              }}
+            />
+          )}
 
           {activeTab === "timeline" && (
-            <div className="text-white">Timeline Panel</div>
+            <TimelinePanel events={timelineEvents} />
           )}
 
           {activeTab === "soundtrack" && (
