@@ -1,5 +1,7 @@
 import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
 import { GET_RELATED_SNEAKERS } from "@/app/lib/graphql/relatedSneakers";
+import { GET_COMPARE_SNEAKERS } from "@/app/lib/graphql/compare";
+
 import { request } from "graphql-request";
 import { notFound } from "next/navigation";
 
@@ -33,7 +35,15 @@ async function getSneaker(slug: string) {
 async function getRelatedSneakers() {
   const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`;
 
-  const data = await request(endpoint, GET_RELATED_SNEAKERS);
+  const data: any = await request(endpoint, GET_RELATED_SNEAKERS);
+
+  return data.sneakers.nodes;
+}
+
+async function getAllSneakers() {
+  const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`;
+
+  const data: any = await request(endpoint, GET_COMPARE_SNEAKERS);
 
   return data.sneakers.nodes;
 }
@@ -45,9 +55,10 @@ export default async function SneakerPage({
 }) {
   const { slug } = await params;
 
-  const [sneaker, relatedSneakers] = await Promise.all([
+  const [sneaker, relatedSneakers, allSneakers] = await Promise.all([
     getSneaker(slug),
     getRelatedSneakers(),
+    getAllSneakers(),
   ]);
 
   if (!sneaker) {
@@ -58,6 +69,7 @@ export default async function SneakerPage({
     <SneakerExperience
       sneaker={sneaker}
       relatedSneakers={relatedSneakers}
+      allSneakers={allSneakers}
     />
   );
 }

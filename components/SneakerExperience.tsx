@@ -4,15 +4,18 @@ import { useState } from "react";
 import OverviewPanel from "@/components/sneaker/OverviewPanel";
 import SneakerHero from "@/components/SneakerHero";
 import SneakerMiniNav from "@/components/SneakerMiniNav";
+import CompareClient from "@/components/CompareClient";
 
 type SneakerExperienceProps = {
   sneaker: any;
   relatedSneakers: any[];
+  allSneakers: any[];
 };
 
 export default function SneakerExperience({
   sneaker,
   relatedSneakers,
+  allSneakers,
 }: SneakerExperienceProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -54,7 +57,10 @@ export default function SneakerExperience({
           )}
 
           {activeTab === "compare" && (
-            <div className="text-white">Compare Panel</div>
+            <CompareClient
+              sneakers={allSneakers}
+              lockedSneaker={sneaker}
+            />
           )}
         </div>
       </main>
