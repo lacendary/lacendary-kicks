@@ -74,21 +74,21 @@ query GetSneaker($slug: ID!) {
       }
 
       # Original Soundtrack
-      songTitle
-      artist
-      streamingUrl
-
-      albumArtwork {
-        node {
-          sourceUrl
-        }
-      }
-
-      audioFile {
-        node {
-          mediaItemUrl
-        }
-      }
+      trackTitle
+artistName
+spotifyUrl
+appleMusicUrl
+youtubeUrl
+albumArtwork {
+  node {
+    sourceUrl
+  }
+}
+audioFile {
+  node {
+    mediaItemUrl
+  }
+}
 
 # Timeline
 timelineEvents {

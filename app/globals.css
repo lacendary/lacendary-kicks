@@ -42,3 +42,49 @@ body {
 .lk-card-hover:hover {
   border-color: #3a3a3a;
 }
+/* ==========================================================================
+   Equalizer Bars
+   ========================================================================== */
+
+.eq-bar {
+  width: 3px;
+  height: 14px;
+  border-radius: 9999px;
+  background: white;
+  transform-origin: bottom;
+  animation: equalize 0.9s ease-in-out infinite;
+}
+
+.eq-bar-1 {
+  animation-delay: 0ms;
+}
+
+.eq-bar-2 {
+  animation-delay: 180ms;
+}
+
+.eq-bar-3 {
+  animation-delay: 90ms;
+}
+
+@keyframes equalize {
+  0% {
+    transform: scaleY(0.35);
+  }
+
+  25% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(0.55);
+  }
+
+  75% {
+    transform: scaleY(0.85);
+  }
+
+  100% {
+    transform: scaleY(0.35);
+  }
+}
