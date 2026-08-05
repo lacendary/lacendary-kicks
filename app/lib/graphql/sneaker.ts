@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Single Sneaker Query
+   ========================================================================== */
+
 export const GET_SNEAKER = `
 query GetSneaker($slug: ID!) {
 
@@ -9,6 +13,7 @@ query GetSneaker($slug: ID!) {
     sneakerDetails {
 
       # Hero
+
       brand {
         nodes {
           name
@@ -30,6 +35,7 @@ query GetSneaker($slug: ID!) {
       }
 
       # Details Panel
+
       retroReleaseDate
       sku
       retailPrice
@@ -40,9 +46,11 @@ query GetSneaker($slug: ID!) {
       category
 
       # Editorial
+
       lacendaryNotes
 
       # Media
+
       heroImage {
         node {
           sourceUrl
@@ -74,46 +82,93 @@ query GetSneaker($slug: ID!) {
       }
 
       # Original Soundtrack
+
       trackTitle
-artistName
-spotifyUrl
-appleMusicUrl
-youtubeUrl
-albumArtwork {
-  node {
-    sourceUrl
-  }
-}
-audioFile {
-  node {
-    mediaItemUrl
-  }
-}
+      artistName
+      spotifyUrl
+      appleMusicUrl
+      youtubeUrl
 
-# Timeline
-timelineEvents {
-  eventDate
-  timelineLabel
-  eventTitle
-  eventDescription
-  badge
-  source
-  sourceUrl
+      albumArtwork {
+        node {
+          sourceUrl
+        }
+      }
 
-  image {
-    node {
-      sourceUrl
-      altText
+      audioFile {
+        node {
+          mediaItemUrl
+        }
+      }
+
+      # Timeline
+
+      timelineEvents {
+        eventDate
+        timelineLabel
+        eventTitle
+        eventDescription
+        badge
+        source
+        sourceUrl
+
+        image {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
+
+      # Future
+
+      originalReleaseDate
+      originalReleaseYear
+
     }
+
   }
+
 }
+`;
 
-# Future
-originalReleaseDate
-originalReleaseYear
+/* ==========================================================================
+   Recently Archived Query
+   ========================================================================== */
 
+export const GET_RECENT_SNEAKERS = `
+query GetRecentSneakers {
+
+  sneakers(first: 4) {
+
+    nodes {
+
+      title
+      slug
+
+      sneakerDetails {
+
+        brand {
+          nodes {
+            name
+          }
+        }
+
+        model
+        nickname
+        editorialStatus
+
+        cardImage {
+          node {
+            sourceUrl
+          }
+        }
+
+      }
 
     }
+
   }
+
 }
 `;

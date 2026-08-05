@@ -1,16 +1,32 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Root Variables
+   ========================================================================== */
+
 :root {
   --background: #000000;
   --foreground: #ffffff;
 }
 
+/* ==========================================================================
+   Tailwind Theme
+   ========================================================================== */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --font-bebas: var(--font-bebas);
+  --font-inter: var(--font-inter);
 }
+
+/* ==========================================================================
+   Dark Mode
+   ========================================================================== */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -19,15 +35,70 @@
   }
 }
 
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* =========================================
-   Lacendary Kicks Design System
-========================================= */
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.section-title {
+  font-family: var(--font-bebas);
+  @apply uppercase leading-none text-white;
+}
+
+.section-label {
+  font-family: var(--font-bebas);
+  @apply uppercase tracking-[0.08em] text-red-600;
+}
+
+.card-title {
+  font-family: var(--font-bebas);
+  @apply uppercase leading-[0.9] text-white;
+}
+
+.card-cta {
+  font-family: var(--font-bebas);
+  @apply uppercase tracking-wide text-red-600;
+}
+
+.card-description {
+  font-family: var(--font-inter);
+  @apply leading-relaxed text-zinc-300;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.page-width {
+  @apply mx-auto max-w-[1300px] px-6;
+}
+
+.section-spacing {
+  @apply mt-14;
+}
+
+/* ==========================================================================
+   Surfaces
+   ========================================================================== */
+
+.panel {
+  @apply rounded-xl border border-zinc-800 bg-zinc-950;
+}
+
+.panel-hover {
+  @apply transition-all duration-300 hover:border-red-600;
+}
+
+/* Legacy Card Styles (Can be removed after refactoring) */
 
 .lk-card {
   background: #0d0d0d;
@@ -42,6 +113,40 @@ body {
 .lk-card-hover:hover {
   border-color: #3a3a3a;
 }
+
+/* ==========================================================================
+   Hero Backgrounds
+   ========================================================================== */
+
+.hero-gradient {
+  background: linear-gradient(
+    90deg,
+    #000000 0%,
+    #220303 35%,
+    #420606 100%
+  );
+}
+
+.hero-vignette {
+  background: radial-gradient(
+    circle at 70% 50%,
+    transparent 20%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-1;
+}
+
+.image-hover {
+  @apply transition-transform duration-500 group-hover:scale-110;
+}
+
 /* ==========================================================================
    Equalizer Bars
    ========================================================================== */
@@ -88,3 +193,9 @@ body {
     transform: scaleY(0.35);
   }
 }
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+/* Reserved for future helper classes */
