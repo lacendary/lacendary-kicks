@@ -48,77 +48,113 @@ export default function SneakerCard({ sneaker }: SneakerCardProps) {
           group
           relative
           flex
-          h-[285px]
+          h-[300px]
+
           flex-col
           overflow-hidden
-          rounded-lg
+          rounded-xl
           border
-          border-zinc-600
-          bg-[#030303]
+          border-zinc-800
+          bg-[#050505]
           transition-all
           duration-300
           ease-out
           cursor-pointer
+          hover:-translate-y-2
           ${
             isArchive
               ? "hover:border-[#B58A2C]"
               : isPick
               ? "hover:border-red-600"
-              : "hover:border-zinc-500"
+              : "hover:border-zinc-600"
           }
         `}
       >
-        {/* Badge */}
-        <div className="absolute left-3 top-3 z-10">
+        {/* ================================================================
+            Badge
+        ================================================================ */}
+
+        <div className="absolute left-4 top-4 z-20">
           {isArchive && (
-            <span className="bg-[#B58A2C] px-2 py-1 text-[10px] font-bold uppercase text-black">
+            <span className="bg-[#B58A2C] px-3 py-1 font-bebas text-[1.05rem] uppercase tracking-wide text-black">
               Archived
             </span>
           )}
 
           {isPick && (
-            <span className="bg-red-600 px-2 py-1 text-[10px] font-bold uppercase text-white">
+            <span className="bg-red-600 px-3 py-1 font-bebas text-[1.05rem] uppercase tracking-wide text-white">
               Lacendary Pick
             </span>
           )}
         </div>
 
-        {/* Year */}
-        <div className="absolute right-3 top-3 text-xs font-semibold text-zinc-500">
+        {/* ================================================================
+            Year
+        ================================================================ */}
+
+        <div className="absolute right-4 top-4 z-20 font-bebas text-[2.0rem] leading-none text-zinc-700">
           {year}
         </div>
 
-        {/* Hero Image */}
-        <div className="relative h-[150px] pt-8">
+        {/* ================================================================
+            Hero Image
+        ================================================================ */}
+
+        <div className="relative h-[165px] top-15">
           <Image
             src={image}
             alt={sneaker.title}
             fill
-            className="object-contain px-4 pt-6 pb-1 transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+            className="
+              object-contain
+              px-2
+              pt-0
+              transition-all
+              duration-300
+              ease-out
+              group-hover:-translate-y-1
+              group-hover:scale-[1.04]
+            "
           />
         </div>
+{/* ================================================================
+    Text
+================================================================ */}
 
-        {/* Text */}
-        <div className="flex h-[115px] flex-col justify-start px-4 pt-1 pb-3">
-          {/* Brand */}
-          <p className="truncate text-[10px] uppercase tracking-wide text-zinc-400">
-            {details?.brand?.nodes?.[0]?.name}
-          </p>
+<div className="flex flex-1 flex-col px-4 pb-4 pt-14">
 
-          {/* Model */}
-          <div className="mt-0.5 h-[30px] overflow-hidden">
-            <h3 className="line-clamp-2 text-[13px] font-semibold uppercase leading-tight text-white">
-              {details?.model}
-            </h3>
-          </div>
+  {/* Brand + Model */}
 
-          {/* Nickname */}
-          <div className="mt-1 h-[42px] overflow-hidden">
-            <h4 className="line-clamp-2 text-lg font-black uppercase leading-tight text-white">
-              {details?.nickname}
-            </h4>
-          </div>
-        </div>
+  <div className="flex items-baseline gap-1 uppercase">
+
+    <span className="text-[0.95rem] font-bebas tracking-[0.0em] text-White">
+      {details?.brand?.nodes?.[0]?.name}
+    </span>
+
+    <span className="text-[0.95rem] font-bebas tracking-[0.0em] text-white">
+      {details?.model}
+    </span>
+
+  </div>
+
+  {/* Nickname */}
+
+  <h4
+    className="
+      mt-1
+      font-bebas
+      text-[2.2rem]
+      uppercase
+      leading-[0.88]
+      tracking-[-0.02em]
+      text-white
+    "
+  >
+    {details?.nickname}
+  </h4>
+
+</div>
+
       </article>
     </Link>
   );
