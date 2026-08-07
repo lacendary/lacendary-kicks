@@ -38,7 +38,14 @@
 /* ==========================================================================
    Base Styles
    ========================================================================== */
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
 body {
   background: var(--background);
   color: var(--foreground);
@@ -79,11 +86,26 @@ body {
    ========================================================================== */
 
 .page-width {
-  @apply mx-auto max-w-[1300px] px-6;
+  @apply mx-auto px-6;
+  max-width: 1200px;
 }
 
+/* Standard vertical spacing between homepage sections */
+
 .section-spacing {
-  @apply mt-14;
+  @apply mt-6 lg:mt-8;
+}
+
+/* Standard padding for panels */
+
+.panel-padding {
+  @apply p-6 lg:p-8;
+}
+
+/* Standard grid spacing */
+
+.grid-gap {
+  @apply gap-6;
 }
 
 /* ==========================================================================
@@ -94,25 +116,12 @@ body {
   @apply rounded-xl border border-zinc-800 bg-zinc-950;
 }
 
+
 .panel-hover {
   @apply transition-all duration-300 hover:border-red-600;
 }
 
-/* Legacy Card Styles (Can be removed after refactoring) */
 
-.lk-card {
-  background: #0d0d0d;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
-}
-
-.lk-card-hover {
-  transition: all 0.2s ease;
-}
-
-.lk-card-hover:hover {
-  border-color: #3a3a3a;
-}
 
 /* ==========================================================================
    Hero Backgrounds
@@ -145,6 +154,21 @@ body {
 
 .image-hover {
   @apply transition-transform duration-500 group-hover:scale-110;
+}
+.transition-fast {
+  @apply transition-all duration-300;
+}
+
+.transition-medium {
+  @apply transition-all duration-500;
+}
+
+.hover-lift {
+  @apply hover:-translate-y-2;
+}
+
+.hover-scale {
+  @apply group-hover:scale-105 lg:group-hover:scale-110;
 }
 
 /* ==========================================================================
@@ -198,4 +222,40 @@ body {
    Utilities
    ========================================================================== */
 
-/* Reserved for future helper classes */
+/* Layout Helpers */
+
+.content-width {
+  max-width: 760px;
+}
+
+.narrow-width {
+  max-width: 560px;
+}
+
+.heading-width {
+  max-width: 700px;
+}
+
+/* Image Helpers */
+
+.image-cover {
+  @apply object-cover;
+}
+
+.image-contain {
+  @apply object-contain;
+}
+/* ==========================================================================
+   Future Design System
+   ========================================================================== */
+
+/*
+Future reusable helpers:
+
+- Button styles
+- Form inputs
+- Glass panels
+- Section backgrounds
+- Animation presets
+- Status badges
+*/
