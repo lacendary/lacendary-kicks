@@ -34,7 +34,6 @@ export default function HomeFeatureCard({
         hover:border-red-600
       "
     >
-
       {/* ================================================================
           Background Image
       ================================================================ */}
@@ -43,14 +42,15 @@ export default function HomeFeatureCard({
         src="/images/fc-bg1.png"
         alt=""
         fill
-       className="
-object-cover
-opacity-100
-transition-all
-duration-500
-group-hover:scale-110
-group-hover:brightness-110
-"
+        className="
+          object-cover
+          opacity-100
+          transition-all
+          duration-500
+          group-hover:scale-105
+          lg:group-hover:scale-110
+          group-hover:brightness-110
+        "
       />
 
       {/* ================================================================
@@ -59,50 +59,91 @@ group-hover:brightness-110
 
       <div className="absolute inset-0 bg-black/50" />
 
-      
-
       {/* ================================================================
           Card Content
       ================================================================ */}
 
-      <div className="relative flex h-full min-h-[330px] flex-col p-8">
+      <div
+        className="
+          relative
+          flex
+          h-full
+          min-h-[280px]
+          flex-col
+          justify-between
+          p-6
 
-        {/* Card Title */}
+          lg:min-h-[330px]
+          lg:p-8
+        "
+      >
+        {/* ================================================================
+            Top Content
+        ================================================================ */}
 
-        <h2 className="font-bebas text-[4rem] uppercase leading-[0.9] text-white">
-          {title}
-        </h2>
+        <div>
+          {/* Card Title */}
 
-        {/* Card Description */}
+          <h2
+            className="
+              font-bebas
+              text-[3.3rem]
+              sm:text-[3.7rem]
+              lg:text-[4rem]
 
-        <p className="mt-6 text-[1.15rem] leading-relaxed text-zinc-200 leading-8">
-          {description}
-        </p>
+              uppercase
+              leading-[0.88]
+              text-white
+            "
+          >
+            {title}
+          </h2>
 
-        {/* Push CTA to Bottom */}
+          {/* Description */}
 
-        <div className="flex-grow" />
+          <p
+            className="
+              mt-4
+              text-[1rem]
+              leading-7
+              text-zinc-200
 
-        {/* CTA */}
+              lg:mt-6
+              lg:text-[1.15rem]
+              lg:leading-8
+            "
+          >
+            {description}
+          </p>
+        </div>
+
+        {/* ================================================================
+            CTA
+        ================================================================ */}
 
         <p
-         className="
-font-bebas
-text-[2.4rem]
-uppercase
-tracking-wide
-text-red-600
-transition-all
-duration-300
-group-hover:text-white
-group-hover:translate-x-1
-"
+          className="
+            pt-6
+
+            font-bebas
+            text-[2rem]
+            lg:text-[2.4rem]
+
+            uppercase
+            tracking-wide
+
+            text-red-600
+
+            transition-all
+            duration-300
+
+            group-hover:text-white
+            group-hover:translate-x-1
+          "
         >
           {button}
         </p>
-
       </div>
-
     </Link>
   );
 }

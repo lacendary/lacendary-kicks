@@ -14,7 +14,7 @@ export default function HomeHero() {
 
       <div className="absolute inset-0 bg-gradient-to-r from-black via-[#220303] to-[#420606]" />
 
-      {/* Red Glow Behind Shoe */}
+      {/* Red Glow */}
 
       <div className="absolute right-[-120px] top-1/2 h-[700px] w-[700px] -translate-y-1/2 rounded-full bg-red-700/30 blur-[160px]" />
 
@@ -26,32 +26,75 @@ export default function HomeHero() {
           Hero Content
       ================================================================ */}
 
-     <div className="relative grid min-h-[515px] grid-cols-[52%_48%]">
+      <div
+        className="
+          relative
+          grid
+          grid-cols-1
+          lg:grid-cols-[52%_48%]
+
+          min-h-[760px]
+          lg:min-h-[515px]
+        "
+      >
 
         {/* ================================================================
             Left Side
         ================================================================ */}
 
-       <div className="flex flex-col justify-center pl-10 pr-0">
+        <div
+          className="
+            flex
+            flex-col
+            justify-start
+
+            px-8
+            pt-10
+
+            sm:px-10
+            sm:pt-12
+
+            lg:justify-center
+            lg:pl-10
+            lg:pr-0
+            lg:py-0
+          "
+        >
 
           {/* Hero Label */}
 
-          <p className="mb-5 font-bebas text-[35px] uppercase tracking-[0.08em] text-red-600">
+          <p
+            className="
+              mb-4
+              font-bebas
+              uppercase
+              tracking-[0.08em]
+              text-red-600
+
+              text-[1.35rem]
+              sm:text-[1.8rem]
+              lg:text-[35px]
+            "
+          >
             THE INTERACTIVE SNEAKER ARCHIVE
           </p>
 
           {/* Hero Title */}
 
           <h1
-  className="
-    font-bebas Neue
-    text-[10.5rem]
-    uppercase
-    leading-[0.82]
-    tracking-[-0.0em]
-    text-white
-  "
->
+            className="
+              font-bebas
+              uppercase
+              leading-[0.82]
+              tracking-normal
+              text-white
+
+              text-[4.5rem]
+              sm:text-[6rem]
+              md:text-[7rem]
+              lg:text-[10.5rem]
+            "
+          >
             Lacendary
             <br />
             Kicks
@@ -60,19 +103,21 @@ export default function HomeHero() {
           {/* Hero Description */}
 
           <p
-  className="
-    mt-4
-    max-w-[620px]
-    font-inter
-    text-[1.55rem]
-    font-normal
-    leading-[1.35]
-    text-zinc-200
-  "
->
+            className="
+              mt-5
+              max-w-[620px]
+
+              text-[1.15rem]
+              sm:text-[1.3rem]
+              lg:text-[1.55rem]
+
+              leading-[1.45]
+              text-zinc-200
+            "
+          >
             Explore sneakers through original photography,
-360° spinners, videos, timelines, comparisons,
-market data and original soundtracks.
+            360° spinners, videos, timelines, comparisons,
+            market data and original soundtracks.
           </p>
 
         </div>
@@ -81,7 +126,20 @@ market data and original soundtracks.
             Right Side
         ================================================================ */}
 
-        <div className="relative flex items-center justify-center overflow-visible">
+        <div
+          className="
+            relative
+            flex
+            items-end
+            justify-center
+
+            pt-2
+            pb-2
+
+            lg:items-center
+            lg:pb-0
+          "
+        >
 
           <Image
             src="/images/bloodline-home.png"
@@ -89,12 +147,21 @@ market data and original soundtracks.
             width={1080}
             height={720}
             priority
-           className="
-translate-x-0
-translate-y-8
-select-none
-drop-shadow-[0_50px_100px_rgba(0,0,0,.95)]
-"
+            className="
+              w-[105%]
+              max-w-[650px]
+
+              sm:w-[95%]
+
+              lg:w-auto
+              lg:max-w-none
+
+              -translate-y-3
+              lg:translate-y-8
+
+              select-none
+              drop-shadow-[0_50px_100px_rgba(0,0,0,.95)]
+            "
           />
 
         </div>
