@@ -49,18 +49,15 @@ export default function SneakerCard({ sneaker }: SneakerCardProps) {
           relative
           flex
           h-[300px]
-
           flex-col
           overflow-hidden
           rounded-xl
           border
           border-zinc-800
-          bg-[#050505]
-          transition-all
-          duration-300
-          ease-out
+          bg-[#030303]
           cursor-pointer
-          hover:-translate-y-2
+          transition-fast
+          hover-lift
           ${
             isArchive
               ? "hover:border-[#B58A2C]"
@@ -92,7 +89,7 @@ export default function SneakerCard({ sneaker }: SneakerCardProps) {
             Year
         ================================================================ */}
 
-        <div className="absolute right-4 top-4 z-20 font-bebas text-[2.0rem] leading-none text-zinc-700">
+        <div className="absolute right-4 top-4 z-20 font-bebas text-[2rem] leading-none text-zinc-700">
           {year}
         </div>
 
@@ -100,61 +97,58 @@ export default function SneakerCard({ sneaker }: SneakerCardProps) {
             Hero Image
         ================================================================ */}
 
-        <div className="relative h-[165px] top-15">
+        <div className="relative top-15 h-[165px]">
           <Image
             src={image}
             alt={sneaker.title}
             fill
             className="
-              object-contain
+              image-contain
               px-2
-              pt-0
-              transition-all
-              duration-300
-              ease-out
+              transition-fast
               group-hover:-translate-y-1
               group-hover:scale-[1.04]
             "
           />
         </div>
-{/* ================================================================
-    Text
-================================================================ */}
 
-<div className="flex flex-1 flex-col px-4 pb-4 pt-14">
+        {/* ================================================================
+            Text
+        ================================================================ */}
 
-  {/* Brand + Model */}
+        <div className="flex flex-1 flex-col px-4 pt-14 pb-4">
 
-  <div className="flex items-baseline gap-1 uppercase">
+          {/* Brand + Model */}
 
-    <span className="text-[0.95rem] font-bebas tracking-[0.0em] text-White">
-      {details?.brand?.nodes?.[0]?.name}
-    </span>
+          <div className="flex items-baseline gap-1 uppercase">
 
-    <span className="text-[0.95rem] font-bebas tracking-[0.0em] text-white">
-      {details?.model}
-    </span>
+            <span className="font-bebas text-[0.95rem] tracking-normal text-white">
+              {details?.brand?.nodes?.[0]?.name}
+            </span>
 
-  </div>
+            <span className="font-bebas text-[0.95rem] tracking-normal text-white">
+              {details?.model}
+            </span>
 
-  {/* Nickname */}
+          </div>
 
-  <h4
-    className="
-      mt-1
-      font-bebas
-      text-[2.2rem]
-      uppercase
-      leading-[0.88]
-      tracking-[-0.02em]
-      text-white
-    "
-  >
-    {details?.nickname}
-  </h4>
+          {/* Nickname */}
 
-</div>
+          <h4
+            className="
+              mt-1
+              font-bebas
+              text-[2.2rem]
+              uppercase
+              leading-[0.88]
+              tracking-[-0.02em]
+              text-white
+            "
+          >
+            {details?.nickname}
+          </h4>
 
+        </div>
       </article>
     </Link>
   );

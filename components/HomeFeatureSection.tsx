@@ -9,8 +9,9 @@ export default function HomeFeatureSection() {
     <section
       className="
         grid
+        grid-gap
+
         grid-cols-1
-        gap-6
 
         md:grid-cols-2
 
