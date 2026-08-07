@@ -31,10 +31,12 @@ export default function HomeHero() {
           relative
           grid
           grid-cols-1
-          lg:grid-cols-[52%_48%]
 
-          min-h-[760px]
+          py-8
+
+          lg:grid-cols-[52%_48%]
           lg:min-h-[515px]
+          lg:py-0
         "
       >
 
@@ -49,10 +51,8 @@ export default function HomeHero() {
             justify-start
 
             px-8
-            pt-10
 
             sm:px-10
-            sm:pt-12
 
             lg:justify-center
             lg:pl-10
@@ -130,14 +130,17 @@ export default function HomeHero() {
           className="
             relative
             flex
-            items-end
             justify-center
+            items-start
 
-            pt-2
-            pb-2
+            mt-2
+            pb-4
 
+            lg:mt-0
             lg:items-center
             lg:pb-0
+
+            overflow-visible
           "
         >
 
@@ -148,15 +151,17 @@ export default function HomeHero() {
             height={720}
             priority
             className="
-              w-[105%]
-              max-w-[650px]
+              w-full
+              max-w-[330px]
 
-              sm:w-[95%]
+              sm:max-w-[430px]
 
               lg:w-auto
               lg:max-w-none
 
-              -translate-y-3
+              h-auto
+
+              translate-y-0
               lg:translate-y-8
 
               select-none
