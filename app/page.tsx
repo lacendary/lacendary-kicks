@@ -12,7 +12,7 @@ export default async function Home() {
   const sneakers = await getRecentSneakers();
 
   return (
-    <main className="page-width py-6 space-y-6">
+    <main className="page-width py-6">
 
       {/* ================================================================
           Hero
@@ -24,13 +24,17 @@ export default async function Home() {
           Feature Cards
       ================================================================ */}
 
-      <HomeFeatureSection />
+      <div className="section-spacing">
+        <HomeFeatureSection />
+      </div>
 
       {/* ================================================================
-          Recently Archived
+          Recently Added
       ================================================================ */}
 
-      <RecentlyArchived sneakers={sneakers} />
+      <div className="section-spacing">
+        <RecentlyArchived sneakers={sneakers} />
+      </div>
 
     </main>
   );
