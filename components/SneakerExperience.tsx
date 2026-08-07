@@ -45,22 +45,28 @@ export default function SneakerExperience({
 
   return (
     <>
-      {/* Hero */}
+      {/* ================================================================
+          Hero
+      ================================================================ */}
+
       <section className="w-full border-b border-zinc-800 bg-[#0d0d0d]">
-        <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="page-width py-7">
           <SneakerHero sneaker={sneaker} />
         </div>
       </section>
 
-      {/* Main */}
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      {/* ================================================================
+          Main Content
+      ================================================================ */}
+
+      <main className="page-width py-1">
         <SneakerMiniNav
           sneaker={sneaker}
           activeTab={activeTab}
           onTabChange={setActiveTab}
         />
 
-        <div className="mt-8">
+        <div className="mt-4">
           {activeTab === "overview" && (
             <OverviewPanel
               sneaker={sneaker}

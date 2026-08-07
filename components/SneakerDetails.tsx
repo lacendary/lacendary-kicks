@@ -66,7 +66,7 @@ export default function SneakerDetails({
       ================================================================ */}
 
       <header className="panel-header-spacing">
-        <h2 className="panel-heading">
+        <h2 className="panel-heading panel-header-spacing">
           Sneaker Details
         </h2>
       </header>
