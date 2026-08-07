@@ -12,7 +12,7 @@ export default function HomeHero() {
           Background Gradient
       ================================================================ */}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-[#220303] to-[#420606]" />
+      <div className="absolute inset-0 hero-gradient" />
 
       {/* Red Glow */}
 
@@ -20,7 +20,7 @@ export default function HomeHero() {
 
       {/* Dark Vignette */}
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,transparent_20%,rgba(0,0,0,.45)_100%)]" />
+      <div className="absolute inset-0 hero-vignette" />
 
       {/* ================================================================
           Hero Content
@@ -65,11 +65,8 @@ export default function HomeHero() {
 
           <p
             className="
+              section-label
               mb-4
-              font-bebas
-              uppercase
-              tracking-[0.08em]
-              text-red-600
 
               text-[1.35rem]
               sm:text-[1.8rem]
@@ -151,6 +148,8 @@ export default function HomeHero() {
             height={720}
             priority
             className="
+              transition-medium
+
               w-full
               max-w-[330px]
 

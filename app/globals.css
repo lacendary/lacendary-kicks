@@ -7,6 +7,12 @@
 :root {
   --background: #000000;
   --foreground: #ffffff;
+
+  /* Brand Surfaces */
+
+  --panel: #0b0b0b;
+  --panel-border: #27272a;
+  --panel-hover-border: #dc2626;
 }
 
 /* ==========================================================================
@@ -38,14 +44,17 @@
 /* ==========================================================================
    Base Styles
    ========================================================================== */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -113,15 +122,18 @@ body {
    ========================================================================== */
 
 .panel {
-  @apply rounded-xl border border-zinc-800 bg-zinc-950;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  border-radius: 0.75rem;
 }
-
 
 .panel-hover {
-  @apply transition-all duration-300 hover:border-red-600;
+  @apply transition-all duration-300;
 }
 
-
+.panel-hover:hover {
+  border-color: var(--panel-hover-border);
+}
 
 /* ==========================================================================
    Hero Backgrounds
@@ -155,6 +167,7 @@ body {
 .image-hover {
   @apply transition-transform duration-500 group-hover:scale-110;
 }
+
 .transition-fast {
   @apply transition-all duration-300;
 }
@@ -245,6 +258,7 @@ body {
 .image-contain {
   @apply object-contain;
 }
+
 /* ==========================================================================
    Future Design System
    ========================================================================== */
