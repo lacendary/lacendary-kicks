@@ -224,6 +224,21 @@ body {
 .hover-scale {
   @apply group-hover:scale-105 lg:group-hover:scale-110;
 }
+.fade-scale-in {
+  animation: fadeScaleIn 0.28s ease-out;
+}
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 /* ==========================================================================
    Equalizer Bars

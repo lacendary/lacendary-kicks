@@ -28,9 +28,17 @@ export default function ImageLightbox({
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") onPrevious();
-      if (e.key === "ArrowRight") onNext();
+      switch (e.key) {
+        case "Escape":
+          onClose();
+          break;
+        case "ArrowLeft":
+          onPrevious();
+          break;
+        case "ArrowRight":
+          onNext();
+          break;
+      }
     };
 
     document.body.style.overflow = "hidden";
@@ -48,49 +56,192 @@ export default function ImageLightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm"
       onClick={onClose}
+      className="
+        fixed
+        inset-0
+        z-[9999]
+
+        flex
+        items-center
+        justify-center
+
+        bg-black/95
+        backdrop-blur-md
+
+        animate-in
+        fade-in
+        duration-300
+      "
     >
-      {/* Previous */}
+      {/* ================================================================
+          Previous
+      ================================================================ */}
+
       <button
         onClick={(e) => {
           e.stopPropagation();
           onPrevious();
         }}
-        className="absolute left-6 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-4 text-3xl text-white transition hover:bg-white/20"
+        aria-label="Previous Image"
+        className="
+          absolute
+          left-8
+          top-1/2
+          -translate-y-1/2
+
+          flex
+          h-14
+          w-14
+          items-center
+          justify-center
+
+          rounded-full
+
+          bg-white/10
+          backdrop-blur
+
+          text-4xl
+          text-white
+
+          transition-all
+          duration-300
+
+          hover:bg-red-600
+          hover:scale-110
+        "
       >
         ‹
       </button>
 
-      {/* Image */}
+      {/* ================================================================
+          Image
+      ================================================================ */}
+
       <img
+        key={image.sourceUrl}
         src={image.sourceUrl}
         alt={image.altText ?? ""}
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl"
+        className="
+          max-h-[90vh]
+          max-w-[90vw]
+
+          rounded-xl
+
+          object-contain
+
+          shadow-[0_35px_100px_rgba(0,0,0,.85)]
+
+          animate-in
+          fade-in
+          zoom-in-95
+
+          duration-300
+        "
       />
 
-      {/* Next */}
+      {/* ================================================================
+          Next
+      ================================================================ */}
+
       <button
         onClick={(e) => {
           e.stopPropagation();
           onNext();
         }}
-        className="absolute right-6 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-4 text-3xl text-white transition hover:bg-white/20"
+        aria-label="Next Image"
+        className="
+          absolute
+          right-8
+          top-1/2
+          -translate-y-1/2
+
+          flex
+          h-14
+          w-14
+          items-center
+          justify-center
+
+          rounded-full
+
+          bg-white/10
+          backdrop-blur
+
+          text-4xl
+          text-white
+
+          transition-all
+          duration-300
+
+          hover:bg-red-600
+          hover:scale-110
+        "
       >
         ›
       </button>
 
-      {/* Close */}
+      {/* ================================================================
+          Close
+      ================================================================ */}
+
       <button
-        onClick={onClose}
-        className="absolute right-6 top-6 rounded-full bg-white/10 px-4 py-2 text-2xl text-white transition hover:bg-white/20"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label="Close"
+        className="
+          absolute
+          top-8
+          right-8
+
+          flex
+          h-12
+          w-12
+          items-center
+          justify-center
+
+          rounded-full
+
+          bg-white/10
+          backdrop-blur
+
+          text-2xl
+          text-white
+
+          transition-all
+          duration-300
+
+          hover:bg-red-600
+          hover:rotate-90
+        "
       >
         ✕
       </button>
 
-      {/* Counter */}
-      <div className="absolute bottom-6 rounded-full bg-black/60 px-4 py-2 text-sm text-white">
+      {/* ================================================================
+          Counter
+      ================================================================ */}
+
+      <div
+        className="
+          absolute
+          bottom-8
+
+          rounded-full
+
+          bg-black/60
+          backdrop-blur
+
+          px-5
+          py-2
+
+          font-inter
+          text-sm
+          text-white
+        "
+      >
         {currentIndex + 1} / {images.length}
       </div>
     </div>
