@@ -17,7 +17,7 @@ export default function SiteHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
+    <header className="relative sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
       <div className="mx-auto flex h-16 lg:h-20 max-w-7xl items-center px-6">
 
         {/* Logo */}
@@ -73,14 +73,27 @@ export default function SiteHeader() {
 
       </div>
 
-      {/* Mobile Navigation */}
-      <nav
-        className={`overflow-hidden bg-zinc-950 transition-all duration-300 ease-in-out lg:hidden ${
-          menuOpen
-            ? "max-h-96 opacity-100 border-t border-zinc-800"
-            : "max-h-0 opacity-0"
-        }`}
-      >
+     {/* Mobile Navigation */}
+
+{menuOpen && (
+  <nav
+    className="
+      absolute
+      left-0
+      top-full
+      w-full
+
+      border-t
+      border-zinc-800
+
+      bg-black/95
+      backdrop-blur
+
+      shadow-2xl
+
+      lg:hidden
+    "
+  >
         <ul className="flex flex-col py-4">
           {navItems.map((item) => (
             <li key={item.href}>
@@ -95,6 +108,7 @@ export default function SiteHeader() {
           ))}
         </ul>
       </nav>
+)}
     </header>
   );
 }
