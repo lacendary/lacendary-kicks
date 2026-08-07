@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -16,91 +16,183 @@ export default function SiteHeader() {
     { label: "About Us", href: "/about" },
   ];
 
+  // Prevent page scrolling when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
-    <header className="relative sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
-      <div className="mx-auto flex h-16 lg:h-20 max-w-7xl items-center px-6">
+    <>
+      <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-7xl items-center px-6 lg:h-20">
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <Image
-            src="/LacendaryLogo.png"
-            alt="Lacendary Kicks"
-            width={240}
-            height={70}
-            priority
-            className="h-12 w-auto sm:h-14 lg:h-16"
-          />
-        </Link>
+          {/* ================================================================
+              Logo
+          ================================================================ */}
 
-        {/* Desktop Navigation */}
-        <nav className="ml-auto hidden lg:block">
-          <ul className="flex items-center gap-10">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm font-bold uppercase tracking-wide text-white transition-colors hover:text-red-500"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <Link
+            href="/"
+            className="flex items-center"
+            onClick={() => setMenuOpen(false)}
+          >
+            <Image
+              src="/LacendaryLogo.png"
+              alt="Lacendary Kicks"
+              width={240}
+              height={70}
+              priority
+              className="h-12 w-auto sm:h-14 lg:h-16"
+            />
+          </Link>
 
-        {/* Mobile Hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="ml-auto flex h-10 w-10 flex-col items-center justify-center lg:hidden"
-          aria-label="Toggle Navigation"
-        >
-          <span
-            className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
-              menuOpen ? "translate-y-2 rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`my-1 block h-0.5 w-7 bg-white transition-all duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
-              menuOpen ? "-translate-y-2 -rotate-45" : ""
-            }`}
-          />
-        </button>
+          {/* ================================================================
+              Desktop Navigation
+          ================================================================ */}
 
-      </div>
+          <nav className="ml-auto hidden lg:block">
+            <ul className="flex items-center gap-10">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-sm font-bold uppercase tracking-wide text-white transition-colors duration-300 hover:text-red-500"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-     {/* Mobile Navigation */}
+          {/* ================================================================
+              Hamburger
+          ================================================================ */}
 
-{menuOpen && (
-  <nav
-    className="
-      absolute
-      left-0
-      top-full
-      w-full
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Navigation"
+            className="ml-auto flex h-10 w-10 flex-col items-center justify-center lg:hidden"
+          >
+            <span
+              className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
+                menuOpen ? "translate-y-2 rotate-45" : ""
+              }`}
+            />
 
-      border-t
-      border-zinc-800
+            <span
+              className={`my-1 block h-0.5 w-7 bg-white transition-all duration-300 ${
+                menuOpen ? "opacity-0" : ""
+              }`}
+            />
 
-      bg-black/95
-      backdrop-blur
+            <span
+              className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
+                menuOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
+      </header>
 
-      shadow-2xl
+      {/* ================================================================
+          Backdrop
+      ================================================================ */}
 
-      lg:hidden
-    "
-  >
-        <ul className="flex flex-col py-4">
-          {navItems.map((item) => (
-            <li key={item.href}>
+      <div
+        onClick={() => setMenuOpen(false)}
+        className={`
+          fixed
+          inset-0
+          z-40
+          bg-black/60
+          backdrop-blur-sm
+          transition-all
+          duration-300
+
+          ${
+            menuOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
+          }
+
+          lg:hidden
+        `}
+      />
+
+      {/* ================================================================
+          Mobile Navigation
+      ================================================================ */}
+
+      <nav
+        className={`
+          fixed
+          left-0
+          right-0
+          top-16
+          z-50
+
+          border-b
+          border-zinc-800
+
+          bg-[#050505]/95
+          backdrop-blur-xl
+
+          shadow-2xl
+
+          transition-all
+          duration-300
+          ease-out
+
+          ${
+            menuOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-6 opacity-0 pointer-events-none"
+          }
+
+          lg:hidden
+        `}
+      >
+        <ul className="py-4">
+          {navItems.map((item, index) => (
+            <li
+              key={item.href}
+              className="overflow-hidden"
+            >
               <Link
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="block px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-zinc-900 hover:text-red-500"
+                className={`
+                  block
+                  px-6
+                  py-4
+
+                  font-bebas
+                  text-[2rem]
+                  uppercase
+                  tracking-wide
+
+                  text-white
+
+                  transition-all
+                  duration-300
+
+                  hover:bg-zinc-900
+                  hover:text-red-500
+
+                  ${
+                    menuOpen
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-4 opacity-0"
+                  }
+                `}
+                style={{
+                  transitionDelay: menuOpen
+                    ? `${index * 40}ms`
+                    : "0ms",
+                }}
               >
                 {item.label}
               </Link>
@@ -108,7 +200,6 @@ export default function SiteHeader() {
           ))}
         </ul>
       </nav>
-)}
-    </header>
+    </>
   );
 }
