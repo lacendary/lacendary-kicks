@@ -91,6 +91,46 @@ body {
 }
 
 /* ==========================================================================
+   Panel Typography
+   ========================================================================== */
+
+.panel-heading {
+  font-family: var(--font-bebas);
+  @apply text-[2rem] uppercase tracking-wide text-white;
+}
+
+.panel-subheading {
+  font-family: var(--font-bebas);
+  @apply text-[1.4rem] uppercase tracking-wide text-zinc-400;
+}
+
+.page-title {
+  font-family: var(--font-bebas);
+  @apply uppercase leading-none text-white;
+  font-size: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .page-title {
+    font-size: 4.5rem;
+  }
+}
+
+.panel-text {
+  font-family: var(--font-inter);
+  @apply leading-relaxed text-zinc-300;
+}
+
+.meta-text {
+  @apply text-sm uppercase tracking-wide text-zinc-500;
+}
+
+.value-text {
+  font-family: var(--font-inter);
+  @apply font-semibold text-white;
+}
+
+/* ==========================================================================
    Layout
    ========================================================================== */
 
@@ -257,6 +297,32 @@ body {
 
 .image-contain {
   @apply object-contain;
+}
+/* ==========================================================================
+   Spacing System
+   ========================================================================== */
+
+.section-spacing {
+  @apply mt-6;
+}
+
+.stack-spacing {
+  @apply space-y-6;
+}
+/* ==========================================================================
+   Panel Spacing System
+   ========================================================================== */
+
+.panel-header-spacing {
+  @apply mb-2;
+}
+
+.panel-content-spacing {
+  @apply space-y-4;
+}
+
+.panel-divider-spacing > * + * {
+  @apply pt-3;
 }
 
 /* ==========================================================================

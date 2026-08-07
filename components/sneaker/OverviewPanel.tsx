@@ -17,50 +17,88 @@ export default function OverviewPanel({
 }: OverviewPanelProps) {
   return (
     <>
-      <div className="mt-8">
+      {/* ================================================================
+          Gallery
+      ================================================================ */}
+
+      <div className="section-spacing">
         <SneakerGallery sneaker={sneaker} />
       </div>
 
-      {/* Spinner + Sidebar */}
-      <section className="mt-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Spinner */}
+      {/* ================================================================
+          Spinner + Sidebar
+      ================================================================ */}
+
+      <section className="section-spacing">
+        <div
+          className="
+            grid
+            grid-gap
+            grid-cols-1
+
+            lg:grid-cols-3
+          "
+        >
+          {/* ================================================================
+              Spinner
+          ================================================================ */}
+
           <div className="lg:col-span-2">
-            <section className="rounded-xl border border-zinc-800 bg-[#111111] p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <h2 className="text-lg font-bold uppercase tracking-wide text-white">
-                  360° Spinner
-                </h2>
+            <section className="panel panel-padding">
+             <div className="mb-5 flex flex-wrap items-center gap-3">
 
-                <span className="text-zinc-500">|</span>
+  <h2 className="panel-heading font-bebas text-[2rem] tracking-wide">
+    360° Spinner
+  </h2>
 
-                <span className="text-lg font-bold uppercase tracking-wide text-zinc-400">
-                  Drag to Spin
-                </span>
-              </div>
+  <span className="text-zinc-600">|</span>
 
+  <span className="panel-subheading font-bebas text-[1.4rem] tracking-wide">
+    Drag to Spin
+  </span>
+
+</div>
               <SpinnerViewer
                 images={sneaker.sneakerDetails.spinImages?.nodes ?? []}
               />
             </section>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6 lg:col-span-1">
+          {/* ================================================================
+              Sidebar
+          ================================================================ */}
+
+          <div className="stack-spacing lg:col-span-1">
             <SneakerDetails sneaker={sneaker} />
+
             <SneakerSoundtrack sneaker={sneaker} />
           </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="mt-12">
+      {/* ================================================================
+          Timeline
+      ================================================================ */}
+
+      <section className="section-spacing">
         <SneakerTimeline sneaker={sneaker} />
       </section>
 
-      {/* Related Sneakers + Market Data */}
-      <section className="mt-12">
-        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-4">
+      {/* ================================================================
+          Related Sneakers + Market Data
+      ================================================================ */}
+
+      <section className="section-spacing">
+        <div
+          className="
+            grid
+            grid-gap
+            grid-cols-1
+            items-stretch
+
+            lg:grid-cols-4
+          "
+        >
           <div className="lg:col-span-3">
             <RelatedSneakers sneakers={relatedSneakers} />
           </div>
