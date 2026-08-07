@@ -19,6 +19,7 @@ export default function SiteHeader() {
   // Prevent page scrolling when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -27,7 +28,7 @@ export default function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center px-6 lg:h-20">
+        <div className="page-width flex h-16 items-center lg:h-20">
 
           {/* ================================================================
               Logo
@@ -58,7 +59,7 @@ export default function SiteHeader() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm font-bold uppercase tracking-wide text-white transition-colors duration-300 hover:text-red-500"
+                    className="text-sm font-bold uppercase tracking-wide text-white transition-fast hover:text-red-500"
                   >
                     {item.label}
                   </Link>
@@ -77,19 +78,19 @@ export default function SiteHeader() {
             className="ml-auto flex h-10 w-10 flex-col items-center justify-center lg:hidden"
           >
             <span
-              className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
+              className={`block h-0.5 w-7 bg-white transition-fast ${
                 menuOpen ? "translate-y-2 rotate-45" : ""
               }`}
             />
 
             <span
-              className={`my-1 block h-0.5 w-7 bg-white transition-all duration-300 ${
+              className={`my-1 block h-0.5 w-7 bg-white transition-fast ${
                 menuOpen ? "opacity-0" : ""
               }`}
             />
 
             <span
-              className={`block h-0.5 w-7 bg-white transition-all duration-300 ${
+              className={`block h-0.5 w-7 bg-white transition-fast ${
                 menuOpen ? "-translate-y-2 -rotate-45" : ""
               }`}
             />
@@ -107,10 +108,11 @@ export default function SiteHeader() {
           fixed
           inset-0
           z-40
+
           bg-black/60
           backdrop-blur-sm
-          transition-all
-          duration-300
+
+          transition-fast
 
           ${
             menuOpen
@@ -142,8 +144,7 @@ export default function SiteHeader() {
 
           shadow-2xl
 
-          transition-all
-          duration-300
+          transition-fast
           ease-out
 
           ${
@@ -176,8 +177,7 @@ export default function SiteHeader() {
 
                   text-white
 
-                  transition-all
-                  duration-300
+                  transition-fast
 
                   hover:bg-zinc-900
                   hover:text-red-500
