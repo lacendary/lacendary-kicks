@@ -59,7 +59,7 @@ export default function SiteHeader() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm font-bold uppercase tracking-wide text-white transition-fast hover:text-red-500"
+                    className="nav-text transition-fast hover:text-red-500"
                   >
                     {item.label}
                   </Link>
@@ -166,16 +166,11 @@ export default function SiteHeader() {
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className={`
+                  nav-text
                   block
                   px-6
                   py-4
-
-                  font-bebas
                   text-[2rem]
-                  uppercase
-                  tracking-wide
-
-                  text-white
 
                   transition-fast
 

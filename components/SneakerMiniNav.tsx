@@ -44,18 +44,33 @@ export default function SneakerMiniNav({
 
   return (
     <nav className="mt-8">
-      <ul className="flex items-center gap-10 overflow-x-auto">
+      <ul
+        className="
+          flex
+          items-center
+          gap-8
+          overflow-x-auto
+          hide-scrollbar
+        "
+      >
         {navItems
           .filter((item) => item.show)
           .map((item) => (
             <li key={item.id}>
               <button
                 onClick={() => onTabChange(item.id)}
-                className={`whitespace-nowrap border-b-2 pb-3 text-sm font-semibold uppercase tracking-wider transition-colors ${
-                  activeTab === item.id
-                    ? "border-red-600 text-white"
-                    : "border-transparent text-zinc-500 hover:text-white"
-                }`}
+                className={`
+                  nav-text
+                  whitespace-nowrap
+                  border-b-2
+                  pb-3
+                  transition-fast
+                  ${
+                    activeTab === item.id
+                      ? "border-red-600 text-white"
+                      : "border-transparent text-zinc-600 hover:text-zinc-300"
+                  }
+                `}
               >
                 {item.label}
               </button>

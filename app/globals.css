@@ -89,6 +89,11 @@ body {
   font-family: var(--font-inter);
   @apply leading-relaxed text-zinc-300;
 }
+.nav-text {
+  font-family: var(--font-bebas);
+  @apply uppercase tracking-[0.08em] text-white;
+  font-size: 1.2rem;
+}
 
 /* ==========================================================================
    Panel Typography
