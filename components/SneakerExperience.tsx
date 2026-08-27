@@ -9,17 +9,21 @@ import TimelinePanel, {
 import SneakerHero from "@/components/SneakerHero";
 import SneakerMiniNav from "@/components/SneakerMiniNav";
 import CompareClient from "@/components/CompareClient";
+import MarketDataPanel from "@/components/sneaker/MarketDataPanel";
+import type { MarketDataRecord } from "@/app/lib/market";
 
 type SneakerExperienceProps = {
   sneaker: any;
   relatedSneakers: any[];
   allSneakers: any[];
+  marketData: MarketDataRecord | null;
 };
 
 export default function SneakerExperience({
   sneaker,
   relatedSneakers,
   allSneakers,
+  marketData,
 }: SneakerExperienceProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -62,15 +66,31 @@ export default function SneakerExperience({
       <main className="page-width py-1">
         <SneakerMiniNav
           sneaker={sneaker}
+          hasMarketData={Boolean(marketData?.overallDaily.length || marketData?.sizeDaily.length)}
           activeTab={activeTab}
           onTabChange={setActiveTab}
         />
 
-        <div className="mt-4">
+        <div
+          className={
+            activeTab === "market"
+              ? "relative mt-4 lg:left-1/2 lg:w-[min(1320px,calc(100vw-3rem))] lg:-translate-x-1/2"
+              : "mt-4"
+          }
+        >
           {activeTab === "overview" && (
             <OverviewPanel
               sneaker={sneaker}
               relatedSneakers={relatedSneakers}
+            />
+          )}
+
+          {activeTab === "market" && (
+            <MarketDataPanel
+              marketData={marketData}
+              retailPrice={sneaker.sneakerDetails?.retailPrice}
+              stockxUrl={sneaker.sneakerDetails?.stockxUrl}
+              goatUrl={sneaker.sneakerDetails?.goatUrl}
             />
           )}
 

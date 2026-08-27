@@ -1,11 +1,13 @@
 type SneakerMiniNavProps = {
   sneaker: any;
+  hasMarketData: boolean;
   activeTab: string;
   onTabChange: (tab: string) => void;
 };
 
 export default function SneakerMiniNav({
   sneaker,
+  hasMarketData,
   activeTab,
   onTabChange,
 }: SneakerMiniNavProps) {
@@ -26,6 +28,11 @@ export default function SneakerMiniNav({
         details.onFootImages?.nodes?.length > 0,
     },
     {
+      id: "market",
+      label: "Market Data",
+      show: hasMarketData,
+    },
+    {
       id: "timeline",
       label: "Timeline",
       show: details.timelineEvents?.length > 0,
@@ -43,7 +50,7 @@ export default function SneakerMiniNav({
   ];
 
   return (
-    <nav className="mt-8">
+    <nav className="relative z-10 mt-8 pointer-events-auto">
       <ul
         className="
           flex
@@ -58,6 +65,7 @@ export default function SneakerMiniNav({
           .map((item) => (
             <li key={item.id}>
               <button
+                type="button"
                 onClick={() => onTabChange(item.id)}
                 className={`
                   nav-text

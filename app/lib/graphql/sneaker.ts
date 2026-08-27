@@ -45,6 +45,14 @@ query GetSneaker($slug: ID!) {
       designer
       category
 
+      # Market Tracking
+
+      marketTrackingEnabled
+      kicksdbProductId
+      marketTrackingStatus
+      marketLastSuccessfulSyncAt
+      marketNotes
+
       # Editorial
 
       lacendaryNotes
