@@ -3,6 +3,7 @@ import { createMarketRepository } from "@/app/lib/market-repository-factory";
 import { createMarketOperationsClient, type MarketWorkerRequest } from "@/app/lib/market-operations";
 import { verifyWorkerRequest } from "@/app/lib/market-worker-auth";
 import { createWordPressMarketAdmin } from "@/app/lib/wordpress-market-admin";
+import { classifyMarketMapping } from "@/app/lib/market-mapping";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -31,10 +32,7 @@ export async function POST(request: Request) {
     const body = await response.json().catch(() => null) as { data?: Array<{ id: string; title?: string; name?: string; sku?: string; style_id?: string }> } | null;
     if (!response.ok) return Response.json({ error: "kicksdb_request_failed", status: response.status }, { status: 502 });
     const candidates = Array.isArray(body?.data) ? body.data.map((item) => ({ productId: item.id, title: item.title ?? item.name ?? "Unknown", sku: item.sku ?? item.style_id ?? "" })) : [];
-    const normalized = sku.toUpperCase();
-    const exact = candidates.filter((item) => item.sku.trim().toUpperCase() === normalized);
-    const combined = candidates.filter((item) => item.sku.toUpperCase().split(/\s*\/\s*/).includes(normalized));
-    const classification = exact.length === 1 ? "exact_match" : exact.length > 1 ? "ambiguous" : combined.length === 1 ? "combined_sku_match" : candidates.length ? "review_required" : "no_match";
+    const classification = classifyMarketMapping(sku, candidates);
     return Response.json({ classification, storedMappingValid: Boolean(input.storedProductId && candidates.some((item) => item.productId === input.storedProductId)), candidates });
   }
 

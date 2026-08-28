@@ -90,13 +90,13 @@ final class Lacendary_Market_Admin {
         echo '<h2>Market Automation</h2><form method="post" action="'.esc_url(admin_url('admin-post.php')).'"><input type="hidden" name="action" value="lacendary_market_settings">';wp_nonce_field('lacendary_market_settings');
         echo '<table class="form-table"><tr><th>Daily Refresh Enabled</th><td><input type="checkbox" name="enabled" value="1" '.checked(get_option(self::OPT_ENABLED,false),true,false).'></td></tr><tr><th>Daily Refresh Time</th><td><input type="time" name="refresh_time" value="'.esc_attr(get_option(self::OPT_TIME,'03:00')).'"></td></tr><tr><th>Time Zone</th><td>'.esc_html(wp_timezone_string()).'</td></tr><tr><th>Next Scheduled Run</th><td>'.esc_html(get_option(self::OPT_NEXT,'Not scheduled')).'</td></tr><tr><th>Last Full Refresh</th><td>'.esc_html($last['started_at']??'None').'</td></tr><tr><th>Last Status</th><td>'.esc_html($last['status']??'None').'</td></tr></table><p><button class="button button-primary">Save Settings</button></p></form>';
         self::action_form(array('kind'=>'full'),'Run Full Market Refresh Now','button button-secondary');
-        echo '<h2>Market Mapping</h2><table class="widefat striped"><thead><tr><th>Sneaker</th><th>SKU</th><th>Product ID</th><th>Status</th><th>Last Sync</th><th>Controls</th></tr></thead><tbody>';
+        echo '<h2>Market Mapping</h2><table class="widefat striped"><thead><tr><th>Sneaker</th><th>SKU</th><th>Product ID</th><th>Status</th><th>Last Sync</th><th>Mapping note</th><th>Controls</th></tr></thead><tbody>';
         foreach(get_posts(array('post_type'=>'sneaker','posts_per_page'=>-1,'post_status'=>'any')) as $post){
             if(!function_exists('get_field')||!get_field('market_tracking_enabled',$post->ID))continue;
-            $sku=(string)get_field('sku',$post->ID);$pid=(string)get_field('kicksdb_product_id',$post->ID);$status=get_field('market_tracking_status',$post->ID);$sync=(string)get_field('market_last_successful_sync_at',$post->ID);
+            $sku=(string)get_field('sku',$post->ID);$pid=(string)get_field('kicksdb_product_id',$post->ID);$status=get_field('market_tracking_status',$post->ID);$sync=(string)get_field('market_last_successful_sync',$post->ID);$note=(string)get_field('market_notes',$post->ID);
             if(is_array($status))$status=implode(', ',$status);
             $base=array('database_id'=>$post->ID,'product_id'=>$pid,'title'=>$post->post_title,'sku'=>$sku);
-            echo '<tr><td><strong>'.esc_html($post->post_title).'</strong></td><td>'.esc_html($sku).'</td><td><code>'.esc_html($pid).'</code></td><td>'.esc_html((string)$status).'</td><td>'.esc_html($sync).'</td><td>';
+            echo '<tr><td><strong>'.esc_html($post->post_title).'</strong></td><td>'.esc_html($sku).'</td><td><code>'.esc_html($pid).'</code></td><td>'.esc_html((string)$status).'</td><td>'.esc_html($sync).'</td><td>'.esc_html($note).'</td><td>';
             if($pid)self::action_form(array_merge($base,array('kind'=>'single')),'Refresh This Sneaker');
             self::action_form(array_merge($base,array('kind'=>'review')),'Check Market Mapping');
             echo '<details><summary>Manual override</summary>';

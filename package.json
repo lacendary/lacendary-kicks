@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "market:refresh": "node --experimental-strip-types scripts/refresh-market-data.ts",
-    "test:market-refresh": "node --experimental-strip-types --test tests/market-refresh.test.ts tests/market-worker-auth.test.ts",
+    "test:market-refresh": "node --experimental-strip-types --test tests/market-refresh.test.ts tests/market-worker-auth.test.ts tests/market-mapping.test.ts",
     "market:migrate:wordpress": "node --experimental-strip-types scripts/migrate-market-json-to-wordpress.ts"
   },
   "dependencies": {
