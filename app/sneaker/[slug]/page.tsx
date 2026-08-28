@@ -2,7 +2,7 @@ import { GET_SNEAKER } from "@/app/lib/graphql/sneaker";
 import { GET_RELATED_SNEAKERS } from "@/app/lib/graphql/relatedSneakers";
 import { GET_COMPARE_SNEAKERS } from "@/app/lib/graphql/compare";
 import type { GetSneakerResponse } from "@/app/lib/sneaker";
-import { getMarketHistory } from "@/app/lib/market";
+import { createMarketRepository } from "@/app/lib/market-repository-factory";
 
 import { request } from "graphql-request";
 import { notFound } from "next/navigation";
@@ -81,10 +81,11 @@ export default async function SneakerPage({
   const productId = typeof sneaker.sneakerDetails?.kicksdbProductId === "string"
     ? sneaker.sneakerDetails.kicksdbProductId.trim()
     : null;
+  const marketRepository = createMarketRepository();
   const [relatedSneakers, allSneakers, marketData] = await Promise.all([
     getRelatedSneakers(),
     getAllSneakers(),
-    productId ? getMarketHistory(productId) : Promise.resolve(null),
+    productId ? marketRepository.getMarketHistory(productId) : Promise.resolve(null),
   ]);
 
   return (

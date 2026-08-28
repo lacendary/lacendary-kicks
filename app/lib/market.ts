@@ -56,7 +56,7 @@ export type MarketDataRecord = {
   sizeDaily: SizeMarketHistoryPoint[];
 };
 
-type KicksDbProduct = {
+export type KicksDbProduct = {
   id: string;
   avg_price?: number;
   updated_at?: string;
@@ -83,6 +83,42 @@ export function normalizeMarketSnapshot(product: KicksDbProduct, retrievedAt = n
       salesCount15Days: n(v.sales_count_15_days), salesCount30Days: n(v.sales_count_30_days), salesCount60Days: n(v.sales_count_60_days),
       identifiers: (v.identifiers ?? []).flatMap((i) => i.identifier ? [{ identifier: i.identifier, identifierType: i.identifier_type ?? "unknown" }] : []),
       currency: v.currency ?? null, market: v.market ?? null, sourceUpdatedAt: v.updated_at ?? null,
+    })),
+  };
+}
+
+export function normalizeMarketDataRecord(
+  product: KicksDbProduct,
+  retrievedAt = new Date().toISOString(),
+  date = retrievedAt.slice(0, 10),
+): MarketDataRecord {
+  const snapshot = normalizeMarketSnapshot(product, retrievedAt);
+  const source = "kicksdb.standard.product-detail" as const;
+  return {
+    snapshot,
+    overallDaily: [{
+      productId: product.id,
+      date,
+      marketAveragePrice: n(product.avg_price),
+      last90Days: snapshot.last90Days,
+      annual: snapshot.annual,
+      source,
+      sourceUpdatedAt: product.updated_at ?? null,
+      retrievedAt,
+    }],
+    sizeDaily: snapshot.sizes.map((size) => ({
+      productId: product.id,
+      size: size.size,
+      variantId: size.variantId,
+      date,
+      lowestAsk: size.lowestAsk,
+      totalAsks: size.totalAsks,
+      salesCount15Days: size.salesCount15Days,
+      salesCount30Days: size.salesCount30Days,
+      salesCount60Days: size.salesCount60Days,
+      source,
+      sourceUpdatedAt: size.sourceUpdatedAt,
+      retrievedAt,
     })),
   };
 }

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "market:refresh": "node --experimental-strip-types scripts/refresh-market-data.ts",
+    "test:market-refresh": "node --experimental-strip-types --test tests/market-refresh.test.ts tests/market-worker-auth.test.ts",
+    "market:migrate:wordpress": "node --experimental-strip-types scripts/migrate-market-json-to-wordpress.ts"
   },
   "dependencies": {
     "framer-motion": "^12.42.2",
